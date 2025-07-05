@@ -1,0 +1,26 @@
+# Node files
+node_modules
+npm-debug.log
+pnpm-lock.yaml
+yarn.lock
+
+# Env files
+.env
+.env.*
+
+# Editor and OS files
+.DS_Store
+*.swp
+*.swo
+*.log
+.vscode/
+.idea/
+*.iml
+
+# Docker config
+Dockerfile.dev
+compose.yaml
+
+# Git config
+.git
+.gitignore

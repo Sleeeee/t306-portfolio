@@ -1,0 +1,26 @@
+services:
+  postgres:
+    container_name: portfolio-postgres
+    image: postgres:17.5-alpine
+    env_file:
+      - .env.postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  sveltekit:
+    container_name: portfolio-sveltekit
+    build:
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env.prisma
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - '5173:5173'
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    name: portfolio-postgres_data
