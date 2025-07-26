@@ -1,10 +1,10 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/prisma';
+import { getTechnologies } from '$lib/server/getTechnologies.ts';
 
 export const load: PageServerLoad = async () => {
-	const technologies = await prisma.technologies.findMany({});
-
+	const technologies = await getTechnologies();
 	if (technologies) {
 		return { technologies };
 	}
