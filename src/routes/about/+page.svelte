@@ -1,15 +1,11 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import { Alert } from 'flowbite-svelte';
-	import { TechnologiesAccordion } from '$lib';
+	import { Hero, AboutAccordion } from '$lib';
 
 	let { data }: PageProps = $props();
 </script>
 
 <div class="p-8">
-	<Alert>
-		<span class="font-medium">Info alert!</span>
-		You have successfully landed on the about page.
-	</Alert>
-	<TechnologiesAccordion technologies={data.technologies} />
+	<Hero title="About me" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis libero viverra, fermentum odio nec, sodales ipsum. Morbi." />
+	<AboutAccordion technologies={data.technologies} />
 </div>

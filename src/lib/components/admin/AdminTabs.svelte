@@ -1,0 +1,18 @@
+<script lang="ts">
+  import { Tabs, TabItem } from 'flowbite-svelte';
+  import { ActivitiesTable, LabelsTable, TechnologiesTable } from '$lib';
+
+  let { activities, labels, technologies } = $props();
+</script>
+
+<Tabs tabStyle="underline">
+  <TabItem title="Activities" open>
+    <ActivitiesTable {activities} {labels} />
+  </TabItem>
+  <TabItem title="Labels">
+    <LabelsTable {labels} />
+  </TabItem>
+  <TabItem title="Technologies">
+    <TechnologiesTable {labels} {technologies} />
+  </TabItem>
+</Tabs>

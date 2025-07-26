@@ -1,10 +1,18 @@
-<script>
-	import { Alert } from 'flowbite-svelte';
+<script lang="ts">
+	import type { PageProps } from './$types';
+	import { ActivitiesCarousel, ActivitiesModal, Hero } from '$lib';
+
+	let { data }: PageProps = $props();
+  let isOpen = $state(false);
+  const openModal = () => { isOpen = true; };
 </script>
 
 <div class="p-8">
-	<Alert>
-		<span class="font-medium">Info alert!</span>
-		You have successfully landed on the training page.
-	</Alert>
+	<Hero
+    title="Training"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis vulputate viverra. Etiam sit amet erat at orci laoreet semper a sit amet dui. Mauris."
+    onButtonClick={openModal}
+  />
+  <ActivitiesCarousel activities={data.activities} imageActivities={data.imageActivities} />
+  <ActivitiesModal activities={data.activities} bind:isOpen={isOpen} />
 </div>

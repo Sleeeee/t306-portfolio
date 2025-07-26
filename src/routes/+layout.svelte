@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '../app.css';
+  import { Footer, Navigation } from '$lib';
 	let { children } = $props();
-
-	import { Footer, Navigation } from '$lib';
-</script>
+	</script>
 
 <Navigation />
 

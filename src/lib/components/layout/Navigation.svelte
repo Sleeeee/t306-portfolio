@@ -5,7 +5,7 @@
 
 <Navbar class="font-mono">
 	<NavBrand href="/">
-		<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span
+		<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Justin Stas</span
 		>
 	</NavBrand>
 	<div class="flex md:order-2">

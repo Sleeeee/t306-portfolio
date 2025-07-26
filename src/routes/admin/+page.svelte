@@ -1,10 +1,11 @@
-<script>
-	import { Alert } from 'flowbite-svelte';
+<script lang="ts">
+  import type { PageProps } from './$types';
+  import { AdminTabs, Hero } from '$lib';
+
+  let { data }: PageProps = $props();
 </script>
 
 <div class="p-8">
-	<Alert>
-		<span class="font-medium">Info alert!</span>
-		You have successfully landed on the admin page.
-	</Alert>
+	<Hero title="Admin panel" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet arcu finibus, varius augue ac." />
+  <AdminTabs activities={data.activities} labels={data.labels} technologies={data.technologies} />
 </div>
