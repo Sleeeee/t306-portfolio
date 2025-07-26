@@ -8,61 +8,54 @@ datasource db {
 }
 
 model users {
-  id          Int       @id @default(autoincrement())
-  created_at  DateTime  @default(now())
-  email       String    @unique
-  username    String
-  password    String
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  email      String   @unique
+  username   String
+  password   String
 }
 
 model labels {
-  id            Int                  @id @default(autoincrement())
-  name          String
-  color         String
-  technologies  technology_labels[]
-  activities    activity_labels[]
+  id           Int                 @id @default(autoincrement())
+  name         String
+  color        String
+  activities   activity_labels[]
+  technologies technology_labels[]
 }
 
 model technologies {
-  id           Int                  @id @default(autoincrement())
-  name         String
-  mastery      Int
-  description  String?
-  labels       technology_labels[]
-  image        images?              @relation("technology_image")
+  id          Int                 @id @default(autoincrement())
+  name        String
+  mastery     Int
+  description String?
+  image       String?
+  labels      technology_labels[]
 }
 
 model activities {
-  id           Int                @id @default(autoincrement())
-  created_at   DateTime           @default(now())
-  name         String
-  description  String?
-  labels       activity_labels[]
-  image        images?            @relation("activity_image")
+  id          Int               @id @default(autoincrement())
+  date        DateTime          @default(now())
+  name        String
+  description String?
+  image       String?
+  labels      activity_labels[]
+  time_valued Int
+  time_real   Int
+  proof       String?
 }
 
 model technology_labels {
-  id             Int           @id @default(autoincrement())
-  label_id       Int
-  technology_id  Int
-  label          labels        @relation(fields: [label_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  technology     technologies  @relation(fields: [technology_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id            Int          @id @default(autoincrement())
+  label_id      Int
+  technology_id Int
+  label         labels       @relation(fields: [label_id], references: [id], onDelete: Cascade)
+  technology    technologies @relation(fields: [technology_id], references: [id], onDelete: Cascade)
 }
 
 model activity_labels {
-  id           Int         @id @default(autoincrement())
-  label_id     Int
-  activity_id  Int
-  label        labels      @relation(fields: [label_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  activity     activities  @relation(fields: [activity_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-}
-
-model images {
-  id            Int            @id @default(autoincrement())
-  mime_type     String
-  data          Bytes
-  technologyId  Int?           @unique
-  activityId    Int?           @unique
-  technology    technologies?  @relation("technology_image", fields: [technologyId], references: [id], onDelete: Cascade)
-  activity      activities?    @relation("activity_image", fields: [activityId], references: [id], onDelete: Cascade)
+  id          Int        @id @default(autoincrement())
+  label_id    Int
+  activity_id Int
+  activity    activities @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  label       labels     @relation(fields: [label_id], references: [id], onDelete: Cascade)
 }
