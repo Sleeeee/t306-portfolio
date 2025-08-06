@@ -1,36 +1,41 @@
 <script lang="ts">
+  import type { Activity, FormActions, Label, ModalConfig, TableColumn } from '$lib/types';
   import { ActivityForm, BaseTable, DateCell, DeleteModal, ImageModal, LabelsCell, TextModal } from '$lib';
 
-  let { activities, labels } = $props();
+  interface Props {
+    activities: Activity[];
+    labels: Label[];
+  }
 
-  const columns = [
+  let { activities, labels }: Props = $props();
+
+  const columns: TableColumn[] = [
     { title: "Name", field: "name" },
     { title: "Labels", component: LabelsCell },
     { title: "Date", component: DateCell },
     { title: "Valued time (H)", field: "time_valued" },
     { title: "Real time (H)", field: "time_real" },
-    { title: "Description", button: {
-      key: "description",
-      type: "text"
-    }},
-    { title: "Image", button: {
-      key: "image",
-      type: "image"
-    }},
-    { title: "Proof", button: {
-      key: "proof",
-      type: "image"
-    }}
+    { title: "Description", button: { key: "description", type: "text" }},
+    { title: "Image", button: { key: "image", type: "image" }},
+    { title: "Proof", button: { key: "proof", type: "image" }}
   ];
-  const modals = [
+
+  const modals: ModalConfig[] = [
     { key: "description", title: "Read description", component: TextModal },
     { key: "image", title: "View image", component: ImageModal },
     { key: "proof", title: "Review proof", component: ImageModal }
   ];
+
+  const formActions: FormActions = {
+    edit: "?/editActivity",
+    delete: "?/deleteActivity",
+    create: "?/createActivity"
+  }
 </script>
 
 <BaseTable
   {columns}
+  {formActions}
   items={activities}
   {modals}
   {labels}

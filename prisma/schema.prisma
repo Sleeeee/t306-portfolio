@@ -19,8 +19,8 @@ model labels {
   id           Int                 @id @default(autoincrement())
   name         String
   color        String
-  activities   activity_labels[]
-  technologies technology_labels[]
+  activities   activities[]
+  technologies technologies[]
 }
 
 model technologies {
@@ -29,7 +29,7 @@ model technologies {
   mastery     Int
   description String?
   image       String?
-  labels      technology_labels[]
+  labels      labels[]
 }
 
 model activities {
@@ -38,24 +38,8 @@ model activities {
   name        String
   description String?
   image       String?
-  labels      activity_labels[]
+  labels      labels[]
   time_valued Int
   time_real   Int
   proof       String?
-}
-
-model technology_labels {
-  id            Int          @id @default(autoincrement())
-  label_id      Int
-  technology_id Int
-  label         labels       @relation(fields: [label_id], references: [id], onDelete: Cascade)
-  technology    technologies @relation(fields: [technology_id], references: [id], onDelete: Cascade)
-}
-
-model activity_labels {
-  id          Int        @id @default(autoincrement())
-  label_id    Int
-  activity_id Int
-  activity    activities @relation(fields: [activity_id], references: [id], onDelete: Cascade)
-  label       labels     @relation(fields: [label_id], references: [id], onDelete: Cascade)
 }

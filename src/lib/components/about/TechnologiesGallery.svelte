@@ -1,18 +1,24 @@
 <script lang="ts">
+  import type { Technology } from '$lib/types';
   import { Badge, Gallery, Progressradial } from 'flowbite-svelte';
 
-  let { technologies } = $props();
-  const getQuarter = (index: number) => {
-    const baseSize = Math.floor(technologies.length / 4);
-    const remainder = technologies.length % 4;
-    const startIndex = index * baseSize + Math.min(index, remainder);
-    const endIndex = startIndex + baseSize + (index < remainder ? 1 : 0);
+  interface Props {
+    technologies: Technology[];
+  }
+
+  let { technologies }: Props = $props();
+
+  const getQuarter = (index: number): Technology[] => {
+    const baseSize: number = Math.floor(technologies.length / 4);
+    const remainder: number = technologies.length % 4;
+    const startIndex: number = index * baseSize + Math.min(index, remainder);
+    const endIndex: number = startIndex + baseSize + (index < remainder ? 1 : 0);
     return technologies.slice(startIndex, endIndex);
   };
+
   let openIndex: number | null = $state(null);
-  const expandCard = (index: number) => {
+  const expandCard = (index: number): void => {
     openIndex = index === openIndex ? null : index;
-    console.log(openIndex);
   };
 </script>
 

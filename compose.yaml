@@ -16,6 +16,7 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
+      - uploads:/app/static/uploads
     ports:
       - '5173:5173'
     depends_on:
@@ -24,3 +25,5 @@ services:
 volumes:
   postgres_data:
     name: portfolio-postgres_data
+  uploads:
+    name: portfolio-uploads

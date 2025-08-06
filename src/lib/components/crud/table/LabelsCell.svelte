@@ -1,7 +1,12 @@
 <script lang="ts">
+  import type { Item } from '$lib/types';
   import { Badge } from 'flowbite-svelte';
 
-  let { item } = $props();
+  interface Props {
+    item: Item;
+  }
+
+  let { item }: Props = $props();
 </script>
 
 <div class="flex flex-wrap justify-center gap-2">

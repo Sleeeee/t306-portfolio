@@ -1,12 +1,23 @@
 <script lang="ts">
+  import type { Activity, ImageProps } from '$lib/types';
 	import { Badge, Carousel, Controls, Indicators } from 'flowbite-svelte';
 
-  let { activities, imageActivities } = $props();
-  let index = $state(0);
+  interface Props {
+    activities: Activity[];
+  }
+
+  let { activities }: Props = $props();
+
+  const images: ImageProps[] = activities.map(a => ({
+    src: a.image,
+    alt: a.name
+  }));
+
+  let index: number = $state(0);
 </script>
 
 <div class="border rounded-lg bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-md">
-  <Carousel images={imageActivities} bind:index>
+  <Carousel {images} bind:index>
     <Controls />
     <Indicators />
   </Carousel>

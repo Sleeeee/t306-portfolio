@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
+	import type { PageProps } from '$types';
 	import { ActivitiesCarousel, ActivitiesModal, Hero } from '$lib';
 
 	let { data }: PageProps = $props();
-  let isOpen = $state(false);
-  const openModal = () => { isOpen = true; };
+  let isOpen: boolean = $state(false);
+  const openModal = (): void => { isOpen = true; };
 </script>
 
 <div class="p-8">

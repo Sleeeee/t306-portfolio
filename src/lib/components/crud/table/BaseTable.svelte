@@ -1,18 +1,23 @@
 <script lang="ts">
+  import type { Component } from 'svelte';
+  import type { FormActions, Item, Label, ModalConfig, TableColumn } from '$lib/types';
   import { Button, Drawer, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { EditOutline, PlusOutline, TrashBinOutline } from 'flowbite-svelte-icons';
   import { slide } from 'svelte/transition';
   import { ModalButton } from '$lib';
 
-  let {
-    columns,
-    items,
-    modals,
-    labels,
-    editComponent = null,
-    deleteComponent = null,
-    createComponent = null
-  } = $props();
+  interface Props {
+    columns: TableColumn[];
+    formActions: FormActions;
+    items: Item[];
+    modals: ModalConfig[];
+    labels: Label[];
+    editComponent: Component;
+    deleteComponent: Component;
+    createComponent: Component;
+  }
+
+  let { columns, formActions, items, modals, labels, editComponent = null, deleteComponent = null, createComponent = null }: Props = $props();
 
   let activeDialog: string | null = $state(null);
   let itemIndex: number | null = $state(null);
@@ -26,34 +31,34 @@
     itemIndex = null;
   };
 
-  let isEditHidden = $derived(activeDialog !== "edit");
-  let isDeleteOpen = $derived(activeDialog === "delete");
-  let isCreateHidden = $derived(activeDialog !== "create");
+  let isEditHidden: boolean = $derived(activeDialog !== "edit");
+  let isDeleteOpen: boolean = $derived(activeDialog === "delete");
+  let isCreateHidden: boolean = $derived(activeDialog !== "create");
 </script>
 
 {#if editComponent}
-  <Drawer bind:hidden={isEditHidden} closeDrawer={closeDialog} placement="right">
+  <Drawer bind:hidden={isEditHidden} placement="right" closeDrawer={closeDialog}>
     {@const EditComponent = editComponent}
-    <EditComponent item={itemIndex !== null ? items[itemIndex] : null} {labels} onclose={closeDialog} />
+    <EditComponent {closeDialog} formAction={formActions?.edit} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>
 {/if}
 
 {#if deleteComponent}
-  <Modal bind:open={isDeleteOpen} onclose={closeDialog} size="lg" transition={slide} autoclose>
+  <Modal bind:open={isDeleteOpen} size="lg" transition={slide} onclose={closeDialog}>
     {@const DeleteComponent = deleteComponent}
-    <DeleteComponent item={itemIndex !== null ? items[itemIndex] : null} />
+    <DeleteComponent {closeDialog} formAction={formActions?.delete} item={itemIndex !== null ? items[itemIndex] : null} />
   </Modal>
 {/if}
 
 {#if createComponent}
   <Drawer bind:hidden={isCreateHidden} closeDrawer={closeDialog}>
     {@const CreateComponent = createComponent}
-    <CreateComponent item={itemIndex !== null ? items[itemIndex] : null} {labels} onclose={closeDialog} />
+    <CreateComponent {closeDialog} formAction={formActions?.create} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>
 {/if}
 
 {#each modals as modal}
-  <Modal title={modal.title} open={activeDialog === modal.key} onclose={closeDialog} size="lg" transition={slide}>
+  <Modal title={modal.title} open={activeDialog === modal.key} {closeDialog} size="lg" transition={slide} onclose={closeDialog}>
     {@const ModalComponent = modal.component}
     <ModalComponent item={itemIndex !== null ? items[itemIndex] : null} key={modal.key} />
   </Modal>

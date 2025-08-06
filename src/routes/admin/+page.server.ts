@@ -1,17 +1,28 @@
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { getActivities } from '$lib/server/getActivities.ts';
-import { getLabels } from '$lib/server/getLabels.ts';
-import { getTechnologies } from '$lib/server/getTechnologies.ts';
+import type { Actions, PageServerLoad } from './$types';
+import type { Activity, Label, Technology } from '$lib/types';
+import { createActivity, createLabel, createTechnology, deleteActivity, deleteLabel, deleteTechnology, editActivity, editLabel, editTechnology, getActivities, getLabels, getTechnologies } from '$lib/server';
 
 export const load: PageServerLoad = async () => {
-  const activities = await getActivities();
-  const labels = await getLabels();
-  const technologies = await getTechnologies();
+  const activities: Activity[] = await getActivities();
+  const labels: Label[] = await getLabels();
+  const technologies: Technology[] = await getTechnologies();
 
   if (activities || labels || technologies) {
     return { activities, labels, technologies };
   }
 
-  error(404, 'Not found');
+  error(404, "Not found");
 };
+
+export const actions = {
+  createActivity,
+  createLabel,
+  createTechnology,
+  deleteActivity,
+  deleteLabel,
+  deleteTechnology,
+  editActivity,
+  editLabel,
+  editTechnology
+} satisfies Actions;

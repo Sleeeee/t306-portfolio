@@ -1,26 +1,14 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { getActivities } from '$lib/server/getActivities.ts';
-
-type ImageActivity = {
-  src: string;
-  alt: string;
-};
+import type { Activity } from '$lib/types';
+import { getActivities } from '$lib/server';
 
 export const load: PageServerLoad = async () => {
-  const activities = await getActivities();
+  const activities: Activity[] = await getActivities();
 
   if (activities) {
-    const imageActivities: ImageActivity[] = activities.map((a) => ({
-      src: a.image,
-      alt: a.name,
-    }));
-
-    return {
-      activities,
-      imageActivities
-    };
+    return { activities };
   }
 
-	error(404, 'Not found');
+	error(404, "Not found");
 };

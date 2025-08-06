@@ -1,8 +1,10 @@
 <script lang="ts">
 	import '../app.css';
+  import type { PageProps } from '$types';
   import { Footer, Navigation } from '$lib';
-	let { children } = $props();
-	</script>
+
+	let { children }: PageProps = $props();
+</script>
 
 <Navigation />
 

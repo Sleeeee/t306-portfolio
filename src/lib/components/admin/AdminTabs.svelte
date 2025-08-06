@@ -1,8 +1,15 @@
 <script lang="ts">
+  import type { Activity, Label, Technology } from '$lib/types';
   import { Tabs, TabItem } from 'flowbite-svelte';
   import { ActivitiesTable, LabelsTable, TechnologiesTable } from '$lib';
 
-  let { activities, labels, technologies } = $props();
+  interface Props {
+    activities: Activity[];
+    labels: Label[];
+    technologies: Technology[];
+  }
+
+  let { activities, labels, technologies }: Props = $props();
 </script>
 
 <Tabs tabStyle="underline">

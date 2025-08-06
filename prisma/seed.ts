@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -7,9 +7,7 @@ async function main() {
 
 	await prisma.labels.deleteMany({});
 	await prisma.technologies.deleteMany({});
-	await prisma.activities.deleteMany({});
-	await prisma.technology_labels.deleteMany({});
-	await prisma.activity_labels.deleteMany({});
+	await prisma.activities.deleteMany({});	
 
 	console.log('Tables successfully cleaned. Re-populating tables...');
 
@@ -99,7 +97,10 @@ async function main() {
 			image: '/csc.jpg',
       time_valued: 10,
       time_real: 30,
-      proof: "/postgres_logo.png"
+      proof: "/postgres_logo.png",
+      labels: {
+        connect: [{id: label1.id}, { id: label2.id }]
+      }
 		}
 	});
 	const activity2 = await prisma.activities.create({
@@ -111,54 +112,13 @@ async function main() {
 			image: '/csc.jpg',
       time_valued: 5,
       time_real: 15,
-      proof: "/csc.jpg"
+      proof: "/csc.jpg",
+      labels: {
+        connect: [{id: label1.id}]
+      }
 		}
 	});
-
-	await prisma.technology_labels.create({
-		data: {
-			label_id: label1.id,
-			technology_id: technology2.id
-		}
-	});
-	await prisma.technology_labels.create({
-		data: {
-			label_id: label2.id,
-			technology_id: technology1.id
-		}
-	});
-  await prisma.technology_labels.create({
-		data: {
-			label_id: label1.id,
-			technology_id: technology3.id
-		}
-	});
-  await prisma.technology_labels.create({
-		data: {
-			label_id: label2.id,
-			technology_id: technology3.id
-		}
-	});
-
-	await prisma.activity_labels.create({
-		data: {
-			label_id: label1.id,
-			activity_id: activity1.id
-		}
-	});
-	await prisma.activity_labels.create({
-		data: {
-			label_id: label2.id,
-			activity_id: activity1.id
-		}
-	});
-	await prisma.activity_labels.create({
-		data: {
-			label_id: label1.id,
-			activity_id: activity2.id
-		}
-	});
-
+	
 	console.log('Seeding completed successfully.');
 }
 

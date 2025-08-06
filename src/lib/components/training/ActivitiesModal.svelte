@@ -1,11 +1,17 @@
 <script lang="ts">
+  import type { Activity } from '$lib/types';
   import { Button, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { BookOpenOutline } from 'flowbite-svelte-icons';
   import { slide } from 'svelte/transition';
 
-  let { activities, isOpen = $bindable() } = $props();
-  let proofIndex = $state(null);
-  const viewProof = (index) => {
+  interface Props {
+    activities: Activity[];
+    isOpen: boolean;
+  }
+
+  let { activities, isOpen = $bindable() }: Props = $props();
+  let proofIndex: number | null = $state(null);
+  const viewProof = (index: number | null): void => {
     proofIndex = index;
   };
 </script>

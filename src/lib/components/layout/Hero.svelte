@@ -1,7 +1,13 @@
 <script lang="ts">
   import { Avatar, Button } from 'flowbite-svelte';
 
-  let { title, description, onButtonClick } = $props();
+  interface Props {
+    title: string;
+    description: string;
+    onButtonClick: () => void;
+  }
+
+  let { title, description, onButtonClick }: Props = $props();
 </script>
 
 <div class="m-6 flex flex-col md:flex-row justify-around items-center gap-4 text-center md:text-left">
