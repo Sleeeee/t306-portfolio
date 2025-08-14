@@ -91,10 +91,10 @@
         {#if editComponent || deleteComponent}
           <TableBodyCell>
             {#if editComponent}
-              <Button size="xs" onclick={() => { openDialog("edit", i); }} pill><EditOutline /></Button>
+              <Button size="xs" onclick={() => { openDialog("edit", i); }} class="dark:text-gray-300" pill><EditOutline /></Button>
             {/if}
             {#if deleteComponent}
-              <Button size="xs" onclick={() => { openDialog("delete", i)}} pill><TrashBinOutline /></Button>
+              <Button size="xs" onclick={() => { openDialog("delete", i)}} class="dark:text-gray-300" pill><TrashBinOutline /></Button>
             {/if}
           </TableBodyCell>
         {/if}
@@ -104,5 +104,5 @@
 </Table>
 
 {#if createComponent}
-  <Button size="xs" onclick={() => { openDialog("create", null)}} pill class="mt-4 ml-4"><PlusOutline /></Button>
+  <Button size="xs" onclick={() => { openDialog("create", null)}} pill class="mt-4 ml-4 dark:text-gray-300"><PlusOutline /></Button>
 {/if}

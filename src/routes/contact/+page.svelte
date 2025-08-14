@@ -1,7 +1,13 @@
 <script lang="ts">
-  import { Hero } from '$lib';
+  import { ContactButtons, Hero } from '$lib';
 </script>
 
 <div class="p-8">
-  <Hero title="Contact me" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet arcu finibus, varius augue ac." />
+  <Hero
+    image="/favicon.png"
+    title="Contact me"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet arcu finibus, varius augue ac."
+  />
+
+  <ContactButtons />
 </div>

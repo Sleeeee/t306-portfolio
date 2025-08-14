@@ -1,29 +1,33 @@
 <script lang="ts">
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+  import { page } from "$app/state";
+  import type { NavigationPage } from '$ib/types';
+	import { DarkMode, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
 	import { GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
+
+  let activeUrl = $derived(page.url.pathname);
+
+  const pages: NavigationPage[] = [
+    { title: "/home", href: "/" },
+    { title: "/about", href: "/about" },
+    { title: "/training", href: "/training" },
+    { title: "/contact", href: "/contact" },
+    { title: "/admin", href: "/admin", hidden: true }
+  ];
 </script>
 
 <Navbar class="font-mono">
 	<NavBrand href="/">
-		<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Justin Stas</span
-		>
+		<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-primary-700 dark:hover:text-primary-500">Justin Stas</span>
 	</NavBrand>
-	<div class="flex md:order-2">
-		<NavUl>
-			<NavLi href="https://github.com/Sleeeee" target="_blank">
-				<GithubSolid class="h-10 w-10" />
-			</NavLi>
-			<NavLi href="https://linkedin.com/in/justin-stas-82453a271" target="_blank">
-				<LinkedinSolid class="h-10 w-10" />
-			</NavLi>
-		</NavUl>
+
+  <div class="flex items-center md:order-2">
+    <DarkMode class="hover:text-primary-700 dark:hover:text-primary-500" />
 		<NavHamburger />
-	</div>
-	<NavUl class="order-1">
-		<NavLi href="/">/home</NavLi>
-		<NavLi href="/about">/about</NavLi>
-		<NavLi href="/training">/training</NavLi>
-		<NavLi href="/contact">/contact</NavLi>
-		<NavLi href="/admin">/admin</NavLi>
+  </div>
+
+  <NavUl {activeUrl} class="order-1">
+    {#each pages as page}
+      <NavLi href={page.href} class="dark:hover:text-primary-500!" activeClass="text-primary-700 dark:text-primary-500">{page.title}</NavLi>
+    {/each}
 	</NavUl>
 </Navbar>

@@ -9,7 +9,7 @@
     technologies: Technology[];
   }
 
-  let { activities, labels, technologies }: Props = $props();
+  let { activities, labels, technologies } = $props();
 </script>
 
 <Tabs tabStyle="underline">

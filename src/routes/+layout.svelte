@@ -6,10 +6,12 @@
 	let { children }: PageProps = $props();
 </script>
 
-<Navigation />
+<div class="min-h-screen flex flex-col bg-white dark:bg-gray-700">
+  <Navigation />
 
-<main class="mx-auto w-4/5 font-mono">
-	{@render children()}
-</main>
+  <main class="flex-grow mx-auto w-4/5 font-mono">
+  {@render children()}
+  </main>
 
-<Footer />
+  <Footer class="self-end" />
+</div>

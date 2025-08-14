@@ -73,6 +73,13 @@ export type ActionResponse = ActionFailure<{ success: false, Validation }> | { s
 
 // Frontend types
 
+export interface ButtonConfig {
+  href?: string;
+  icon: Component;
+  onclick?: () => void;
+  text: string;
+};
+
 export interface FormActions {
   edit: string;
   delete: string;
@@ -104,6 +111,18 @@ export interface ModalConfig {
   key: string;
   title: string;
   component: Component;
+}
+
+export interface NavigationPage {
+  title: string;
+  href: string;
+  hidden?: boolean;
+}
+
+export interface Section {
+  name: string;
+  element: HTMLElement | null;
+  current: boolean;
 }
 
 export interface TableColumn {

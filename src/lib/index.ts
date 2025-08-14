@@ -1,4 +1,6 @@
-export { default as AboutAccordion } from './components/about/AboutAccordion.svelte';
+export { default as AboutSections } from './components/about/AboutSections.svelte';
+export { default as EducationTimeline } from './components/about/EducationTimeline.svelte';
+export { default as ExperienceTimeline } from './components/about/ExperienceTimeline.svelte';
 export { default as TechnologiesGallery } from './components/about/TechnologiesGallery.svelte';
 
 export { default as ActivitiesTable } from './components/admin/ActivitiesTable.svelte';
@@ -8,6 +10,8 @@ export { default as LabelForm } from './components/admin/LabelForm.svelte';
 export { default as LabelsTable } from './components/admin/LabelsTable.svelte';
 export { default as TechnologiesTable } from './components/admin/TechnologiesTable.svelte';
 export { default as TechnologyForm } from './components/admin/TechnologyForm.svelte';
+
+export { default as ContactButtons } from './components/contact/ContactButtons.svelte';
 
 export { default as BaseForm } from './components/crud/form/BaseForm.svelte';
 export { default as ColorInput } from './components/crud/form/ColorInput.svelte';
@@ -31,9 +35,14 @@ export { default as MasteryCell } from './components/crud/table/MasteryCell.svel
 export { default as ModalButton } from './components/crud/table/ModalButton.svelte';
 export { default as TextModal } from './components/crud/table/TextModal.svelte';
 
+export { default as SectionShowcase } from './components/home/SectionShowcase.svelte';
+
 export { default as Footer } from './components/layout/Footer.svelte';
 export { default as Hero } from './components/layout/Hero.svelte';
 export { default as Navigation } from './components/layout/Navigation.svelte';
+
+export { default as CarouselSkeleton } from './components/skeleton/CarouselSkeleton.svelte';
+export { default as TableSkeleton } from './components/skeleton/TableSkeleton.svelte';
 
 export { default as ActivitiesCarousel } from './components/training/ActivitiesCarousel.svelte';
 export { default as ActivitiesModal } from './components/training/ActivitiesModal.svelte';

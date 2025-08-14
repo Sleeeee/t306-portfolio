@@ -8,12 +8,15 @@
 
   let { technologies }: Props = $props();
 
+  const blankTechnologies: Technology[] = [{ name: "No items found", labels: [], mastery: 0, description: "There is nothing to be displayed for now. Please come back later !", image: "/favicon.png" }];
+  const displayedTechnologies: Technology[] = technologies?.length ? technologies : blankTechnologies;
+
   const getQuarter = (index: number): Technology[] => {
-    const baseSize: number = Math.floor(technologies.length / 4);
-    const remainder: number = technologies.length % 4;
+    const baseSize: number = Math.floor(displayedTechnologies.length / 4);
+    const remainder: number = displayedTechnologies.length % 4;
     const startIndex: number = index * baseSize + Math.min(index, remainder);
     const endIndex: number = startIndex + baseSize + (index < remainder ? 1 : 0);
-    return technologies.slice(startIndex, endIndex);
+    return displayedTechnologies.slice(startIndex, endIndex);
   };
 
   let openIndex: number | null = $state(null);
@@ -22,31 +25,36 @@
   };
 </script>
 
+<div class="w-1/2 m-4 my-4">
+  <h2 class="text-2xl dark:text-white">Technologies</h2>
+  <p class="dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus vitae neque elementum cursus. Nullam sed semper velit. Phasellus.</p>
+</div>
+
 <Gallery class="grid-cols-2 lg:grid-cols-4 gap-4">
   {#each { length: 4 }, index}
-    <Gallery items={getQuarter(index)}>
-      {#snippet figure(item)}
-        <button onclick={() => { expandCard(item.id); }} class="p-2 sm:p-4 border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-md rounded-lg">
-          <img src={item.image} alt={`Image for ${item.name}`} class="w-24 h-24 md:w-48 md:h-48 mx-auto mb-4" />
+  <Gallery items={getQuarter(index)}>
+    {#snippet figure(item)}
+      <button onclick={() => { expandCard(item.id); }} class="p-2 sm:p-4 border-gray-200 dark:border-gray-700 shadow-md bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg dark:text-white cursor-pointer">
+        <img src={item.image} alt={`Image for ${item.name}`} class="w-24 h-24 md:w-48 md:h-48 mx-auto mb-4" />
 
-          {#if item.id === openIndex}
-            <div class="flex mb-2 gap-2">
-              {#each item.labels as label}
-                <Badge color={label.color}>{label.name}</Badge>
-              {/each}
-            </div>
+        {#if item.id === openIndex}
+          <div class="flex mb-2 gap-2">
+            {#each item.labels as label}
+              <Badge color={label.color}>{label.name}</Badge>
+            {/each}
+          </div>
 
-            <div class="flex flex-wrap justify-around items-center">
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {item.name}
-              </h5>
-              <Progressradial progress={item.mastery} size="w-12 h-12" labelInside />
-            </div>
+          <div class="flex flex-wrap justify-around items-center">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight">
+              {item.name}
+            </h5>
+            <Progressradial progress={item.mastery} size="w-12 h-12" labelInside class="dark:text-white" />
+          </div>
 
-            <p class="text-justify">{item.description}</p>
-          {/if}
-        </button>
-      {/snippet}
-    </Gallery>
+          <p class="text-justify">{item.description}</p>
+        {/if}
+      </button>
+    {/snippet}
+  </Gallery>
   {/each}
 </Gallery>

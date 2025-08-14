@@ -68,7 +68,7 @@
 </script>
 
 <div class="flex items-center justify-between mb-4">
-  <h5 class="font-bold">
+  <h5 class="font-bold dark:text-white">
     {(item) ? "Edit" : "Create"} {itemType}
   </h5>
   <CloseButton onclick={closeDialog} />
