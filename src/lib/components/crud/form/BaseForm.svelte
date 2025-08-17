@@ -23,6 +23,7 @@
 
   let formResponse: ActionResponse | null = $state(null);
   let loading: boolean = $state(false);
+
   const enhanceHandler = ({ cancel, formData }) => {
     loading = true;
 
@@ -54,6 +55,7 @@
       await update();
     };
   };
+
   $effect(() => {
     if (formResponse?.success) {
       setTimeout(() => {

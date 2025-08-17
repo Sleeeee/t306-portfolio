@@ -3,10 +3,10 @@
   import { BaseTable, ColorCell, DeleteModal, LabelForm } from '$lib';
 
   interface Props {
-    labels: Label[];
+    items: Label[];
   }
 
-  let { labels }: Props = $props();
+  let { items }: Props = $props();
 
   const columns: TableColumn[] = [
     { title: "Name", field: "name" },
@@ -14,17 +14,14 @@
   ];
 
   const formActions: FormActions = {
-    edit: "?/editLabel",
-    delete: "?/deleteLabel",
-    create: "?/createLabel"
-  }
+    edit: { action: "?/editLabel", component: LabelForm },
+    delete: { action: "?/deleteLabel", component: DeleteModal },
+    create: { action: "?/createLabel", component: LabelForm }
+  };
 </script>
 
 <BaseTable
   {columns}
   {formActions}
-  items={labels}
-  editComponent={LabelForm}
-  deleteComponent={DeleteModal}
-  createComponent={LabelForm}
+  {items}
 />

@@ -5,9 +5,11 @@ const prisma = new PrismaClient();
 async function main() {
 	console.log('Removing existing table content...');
 
-	await prisma.labels.deleteMany({});
-	await prisma.technologies.deleteMany({});
-	await prisma.activities.deleteMany({});	
+	await prisma.labels.deleteMany({});	
+	await prisma.activities.deleteMany({});
+  await prisma.degrees.deleteMany({});
+  await prisma.jobs.deleteMany({});
+  await prisma.technologies.deleteMany({});
 
 	console.log('Tables successfully cleaned. Re-populating tables...');
 
@@ -23,6 +25,78 @@ async function main() {
 			color: 'green'
 		}
 	});
+
+  const activity1 = await prisma.activities.create({
+		data: {
+			date: new Date('2025-02-17'),
+			name: 'Build this portfolio',
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis pharetra libero. Vivamus vel vehicula libero. Sed eget commodo justo. Duis euismod ullamcorper finibus. Cras nibh velit, venenatis et justo ut, volutpat fringilla est. Curabitur velit mi, eleifend ut dictum id, lobortis commodo elit. Nulla facilisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra lectus eget libero blandit lobortis. Nullam ut leo ut erat sodales posuere. Praesent bibendum.',
+			image: '/favicon.png',
+      time_valued: 10,
+      time_real: 30,
+      proof: "/favicon.png",
+      labels: {
+        connect: [{id: label1.id}, { id: label2.id }]
+      }
+		}
+	});
+	const activity2 = await prisma.activities.create({
+		data: {
+			date: new Date('2024-03-21'),
+			name: 'Cyber Security Challenge Belgium 2024',
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac euismod erat. Duis vel sapien viverra ipsum dapibus laoreet. Nam dapibus dictum nisi, non porttitor nulla posuere nec. Interdum et malesuada fames ac ante.',
+			image: '/favicon.png',
+      time_valued: 5,
+      time_real: 15,
+      proof: "/favicon.png",
+      labels: {
+        connect: [{id: label1.id}]
+      }
+		}
+	});
+
+  const degree1 = await prisma.degrees.create({
+    data: {
+      date_start: new Date('2022-06-23'),
+      date_end: new Date('2024-12-11'),
+      degree: 'Bachelor\'s degree',
+      institution: 'Some great college',
+      location: 'Foo City',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ante quam, viverra et pretium eu, euismod ac elit. Cras faucibus dui eget ex accumsan porttitor.'
+    }
+  });
+  const degree2 = await prisma.degrees.create({
+    data: {
+      date_start: new Date('2025-01-29'),
+      degree: 'Master\'s degree',
+      institution: 'Some other great college',
+      location: 'Bar City',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc interdum condimentum libero, ultricies sollicitudin lorem malesuada tempor.'
+    }
+  });
+
+  const job1 = await prisma.jobs.create({
+    data: {
+      date_start: new Date('2023-09-17'),
+      date_end: new Date('2024-07-17'),
+      position: 'IT Intern',
+      company: 'Some great company',
+      location: 'Foo City',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat sagittis dolor tincidunt luctus. Aenean sed nisi aliquet felis.'
+    }
+  });
+  const job2 = await prisma.jobs.create({
+    data: {
+      date_start: new Date('2024-07-18'),
+      date_end: new Date('2024-07-19'),
+      position: 'CEO',
+      company: 'Some bankrupt company',
+      location: 'Bar City',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non sapien eget dui porttitor laoreet eget non metus. Duis at mauris non erat pellentesque euismod. Pellentesque feugiat elementum augue nec fermentum. Sed.'
+    }
+  });
 
 	const technology1 = await prisma.technologies.create({
 		data: {
@@ -48,7 +122,7 @@ async function main() {
 			mastery: 80,
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat neque nec gravida tincidunt. Maecenas a lectus et dolor pulvinar viverra. Integer dapibus rhoncus nisi eu rutrum. Nullam lobortis lectus vel metus.',
-			image: '/postgres_logo.png'
+			image: '/favicon.png'
 		}
 	});
 	const technology4 = await prisma.technologies.create({
@@ -57,7 +131,7 @@ async function main() {
 			mastery: 55,
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim purus et volutpat pellentesque. Suspendisse quis ligula sed ipsum faucibus varius at sit amet mauris. Phasellus ut odio non ipsum congue tincidunt eu posuere risus. Cras et libero odio. Aenean ut risus gravida libero semper congue. Cras vel risus lacinia, ultrices lorem sed, cursus ipsum. Integer porta dignissim sapien quis mattis. Cras condimentum risus id ante feugiat sollicitudin. Mauris lorem odio, molestie a lectus sit amet, rutrum suscipit quam. Mauris tellus felis, auctor quis gravida in, euismod quis mi. Mauris efficitur dapibus erat, non auctor purus hendrerit et. Nam efficitur et tellus quis dapibus. Morbi risus magna, mattis et pharetra sed, commodo eget sem. Sed tristique ornare mi in suscipit. Nam luctus, urna et dapibus interdum, leo urna mattis urna, sed convallis mi sem.',
-			image: '/postgres_logo.png'
+			image: '/favicon.png'
 		}
 	});
 	const technology5 = await prisma.technologies.create({
@@ -84,38 +158,7 @@ async function main() {
 			mastery: 80,
 			description:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim purus et volutpat pellentesque. Suspendisse quis ligula sed ipsum faucibus varius at sit amet mauris. Phasellus ut odio non ipsum congue tincidunt eu posuere risus. Cras et libero odio. Aenean ut risus gravida libero semper congue. Cras vel risus lacinia, ultrices lorem sed, cursus ipsum.',
-			image: '/postgres_logo.png'
-		}
-	});
-
-	const activity1 = await prisma.activities.create({
-		data: {
-			date: new Date('2025-02-17'),
-			name: 'Build this portfolio',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis pharetra libero. Vivamus vel vehicula libero. Sed eget commodo justo. Duis euismod ullamcorper finibus. Cras nibh velit, venenatis et justo ut, volutpat fringilla est. Curabitur velit mi, eleifend ut dictum id, lobortis commodo elit. Nulla facilisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc pharetra lectus eget libero blandit lobortis. Nullam ut leo ut erat sodales posuere. Praesent bibendum.',
-			image: '/csc.jpg',
-      time_valued: 10,
-      time_real: 30,
-      proof: "/postgres_logo.png",
-      labels: {
-        connect: [{id: label1.id}, { id: label2.id }]
-      }
-		}
-	});
-	const activity2 = await prisma.activities.create({
-		data: {
-			date: new Date('2024-03-21'),
-			name: 'Cyber Security Challenge Belgium 2024',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac euismod erat. Duis vel sapien viverra ipsum dapibus laoreet. Nam dapibus dictum nisi, non porttitor nulla posuere nec. Interdum et malesuada fames ac ante.',
-			image: '/csc.jpg',
-      time_valued: 5,
-      time_real: 15,
-      proof: "/csc.jpg",
-      labels: {
-        connect: [{id: label1.id}]
-      }
+			image: '/favicon.png'
 		}
 	});
 	

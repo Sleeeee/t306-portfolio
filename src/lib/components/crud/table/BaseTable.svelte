@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Component } from 'svelte';
   import type { FormActions, Item, Label, ModalConfig, TableColumn } from '$lib/types';
   import { Button, Drawer, Modal, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { EditOutline, PlusOutline, TrashBinOutline } from 'flowbite-svelte-icons';
@@ -12,21 +11,18 @@
     items: Item[];
     modals: ModalConfig[];
     labels: Label[];
-    editComponent: Component;
-    deleteComponent: Component;
-    createComponent: Component;
   }
 
-  let { columns, formActions, items, modals, labels, editComponent = null, deleteComponent = null, createComponent = null }: Props = $props();
+  let { columns, formActions, items, modals, labels }: Props = $props();
 
   let activeDialog: string | null = $state(null);
   let itemIndex: number | null = $state(null);
 
-  const openDialog = (dialogType: string, index: number | null = null) => {
+  const openDialog = (dialogType: string, index: number | null = null): void => {
     activeDialog = dialogType;
     itemIndex = index;
   };
-  const closeDialog = () => {
+  const closeDialog = (): void => {
     activeDialog = null;
     itemIndex = null;
   };
@@ -36,24 +32,24 @@
   let isCreateHidden: boolean = $derived(activeDialog !== "create");
 </script>
 
-{#if editComponent}
+{#if formActions?.edit}
   <Drawer bind:hidden={isEditHidden} placement="right" closeDrawer={closeDialog}>
-    {@const EditComponent = editComponent}
-    <EditComponent {closeDialog} formAction={formActions?.edit} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
+    {@const EditComponent = formActions.edit.component}
+    <EditComponent {closeDialog} formAction={formActions.edit.action} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>
 {/if}
 
-{#if deleteComponent}
+{#if formActions?.delete}
   <Modal bind:open={isDeleteOpen} size="lg" transition={slide} onclose={closeDialog}>
-    {@const DeleteComponent = deleteComponent}
-    <DeleteComponent {closeDialog} formAction={formActions?.delete} item={itemIndex !== null ? items[itemIndex] : null} />
+    {@const DeleteComponent = formActions.delete.component}
+    <DeleteComponent {closeDialog} formAction={formActions.delete.action} item={itemIndex !== null ? items[itemIndex] : null} />
   </Modal>
 {/if}
 
-{#if createComponent}
+{#if formActions?.create}
   <Drawer bind:hidden={isCreateHidden} closeDrawer={closeDialog}>
-    {@const CreateComponent = createComponent}
-    <CreateComponent {closeDialog} formAction={formActions?.create} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
+    {@const CreateComponent = formActions.create.component}
+    <CreateComponent {closeDialog} formAction={formActions.create.action} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>
 {/if}
 
@@ -69,7 +65,7 @@
     {#each columns as column}
       <TableHeadCell>{column.title}</TableHeadCell>
     {/each}
-    {#if editComponent || deleteComponent}
+    {#if formActions?.edit || formActions?.delete}
       <TableHeadCell>Actions</TableHeadCell>
     {/if}
   </TableHead>
@@ -80,7 +76,7 @@
           <TableBodyCell class="!text-wrap">
             {#if column.component}
               {@const ColumnComponent = column.component}
-              <ColumnComponent {item} />
+              <ColumnComponent {item} field={column.field} />
             {:else if column.button}
               <ModalButton type={column.button.type} onclick={() => { openDialog(column.button.key, i); }} />
             {:else}
@@ -88,12 +84,12 @@
             {/if}
           </TableBodyCell>
         {/each}
-        {#if editComponent || deleteComponent}
+        {#if formActions?.edit || formActions?.delete}
           <TableBodyCell>
-            {#if editComponent}
+            {#if formActions.edit}
               <Button size="xs" onclick={() => { openDialog("edit", i); }} class="dark:text-gray-300" pill><EditOutline /></Button>
             {/if}
-            {#if deleteComponent}
+            {#if formActions.delete}
               <Button size="xs" onclick={() => { openDialog("delete", i)}} class="dark:text-gray-300" pill><TrashBinOutline /></Button>
             {/if}
           </TableBodyCell>
@@ -103,6 +99,6 @@
   </TableBody>
 </Table>
 
-{#if createComponent}
+{#if formActions?.create}
   <Button size="xs" onclick={() => { openDialog("create", null)}} pill class="mt-4 ml-4 dark:text-gray-300"><PlusOutline /></Button>
 {/if}

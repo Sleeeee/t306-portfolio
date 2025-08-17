@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
   import type { Activity, FormField, Label } from '$lib/types';
   import { BaseForm, DateInput, IdHiddenInput, ImageInput, LabelsInput, NumberInput, TextAreaInput, TextInput } from '$lib';
 

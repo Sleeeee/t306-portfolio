@@ -12,7 +12,7 @@
 
 <div class="mb-4">
   <Label>{label}</Label>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 dark:text-white">
     <Range bind:value={value} {name} min="0" max="100" step="5" required />
     {value}/100
   </div>

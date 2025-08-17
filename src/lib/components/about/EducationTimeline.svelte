@@ -1,6 +1,27 @@
 <script lang="ts">
+  import type { Degree, TimelineItemConfig } from '$lib/types';
+  import { Timeline, TimelineItem } from 'flowbite-svelte';
+  import { GraduationCapSolid } from 'flowbite-svelte-icons';
+  import { BaseTimeline } from '$lib';
+
+  interface Props {
+    degrees: Degree[];
+  }
+
+  let { degrees }: Props = $props();
+
+  const items: TimelineItemConfig[] = degrees.map(degree => ({
+    title: `${degree.degree} @ ${degree.institution}`,
+    date: `${degree.date_start.toLocaleString(undefined, { month: "short", year: "numeric" })} - ${degree.date_end?.toLocaleDateString(undefined, { month: "short", year: "numeric" }) || "Present"}`,
+    icon: GraduationCapSolid,
+    location: degree.location,
+    description: degree.description
+  }));
 </script>
 
-{#each { length: 50 }}
-  <p>Education timeline</p>
-{/each}
+<div class="w-full md:w-1/2 m-4 mx-auto">
+  <h2 class="mb-2 font-bold text-2xl dark:text-white">Education</h2>
+  <p class="text-justify dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus vitae neque elementum cursus. Nullam sed semper velit. Phasellus.</p>
+</div>
+
+<BaseTimeline {items} />

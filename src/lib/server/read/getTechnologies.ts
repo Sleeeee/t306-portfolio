@@ -1,5 +1,5 @@
 import prisma from '$lib/prisma';
-import { Technology } from '$lib/types';
+import type { Technology } from '$lib/types';
 
 export const getTechnologies = async (): Promise<Technology[]> => {
   const technologies: Technology[] = await prisma.technologies.findMany({

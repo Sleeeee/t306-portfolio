@@ -22,6 +22,26 @@ export interface Activity {
   proof: string;
 }
 
+export interface Degree {
+  id: number;
+  date_start: Date;
+  date_end?: Date;
+  degree: string;
+  institution: string;
+  location: string;
+  description: string;
+}
+
+export interface Job {
+  id: number;
+  date_start: Date;
+  date_end?: Date;
+  position: string;
+  company: string;
+  location: string;
+  description: string;
+}
+
 export interface Technology {
   id: number;
   name: string;
@@ -31,8 +51,8 @@ export interface Technology {
   image: string;
 }
 
-export type Item = Activity | Label | Technology;
-export type Table = "activities" | "labels" | "technologies";
+export type Item = Activity | Degree | Job | Label | Technology;
+export type Table = "activities" | "degrees" | "jobs" | "labels" | "technologies";
 
 // Backend types
 
@@ -80,10 +100,15 @@ export interface ButtonConfig {
   text: string;
 };
 
+export interface FormAction {
+  action: string;
+  component: Component;
+}
+
 export interface FormActions {
-  edit: string;
-  delete: string;
-  create: string;
+  edit?: FormAction;
+  delete?: FormAction;
+  create?: FormAction;
 }
 
 export interface FormField {
@@ -130,4 +155,12 @@ export interface TableColumn {
   field?: string;
   component?: Component;
   button?: ModalButtonConfig;
+}
+
+export interface TimelineItemConfig {
+  title: string;
+  date: string;
+  icon: Component;
+  location: string;
+  description: string;
 }

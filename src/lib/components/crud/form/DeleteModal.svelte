@@ -15,6 +15,7 @@
 
   let formResponse: ActionResponse | null = $state(null);
   let loading: boolean = $state(false);
+
   const enhanceHandler = () => {
     loading = true;
 
@@ -23,6 +24,7 @@
       await update();
     };
   };
+
   $effect(() => {
     if (formResponse?.success) {
       setTimeout(() => {
@@ -34,6 +36,9 @@
       loading = false;
     }
   });
+
+  if (!item.name && item.degree && item.institution) { item.name = `${item.degree} @ ${item.institution}` }
+  else if (!item.name && item.position && item.company) { item.name = `${item.position} @ ${item.company}` }
 </script>
 
 {#if formResponse}
@@ -45,7 +50,7 @@
 
   <ExclamationCircleOutline class="mb-4 mx-auto w-12 h-12" />
   <h3 class="mb-4 text-center">
-    Are you sure you want to delete <strong class="font-bold">{item?.name}</strong> ?
+    Are you sure you want to delete <strong class="font-bold">{item?.name || item?.degree || item?.position}</strong> ?
   </h3>
   <div class="flex justify-center gap-4">
     <Button type="submit" value="delete">Delete</Button>

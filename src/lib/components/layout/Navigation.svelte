@@ -15,19 +15,21 @@
   ];
 </script>
 
-<Navbar class="font-mono">
-	<NavBrand href="/">
-		<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-primary-700 dark:hover:text-primary-500">Justin Stas</span>
-	</NavBrand>
+<div class="relative">
+  <Navbar class="fixed start-0 top-0 z-50 bg-white dark:bg-gray-700 font-mono">
+    <NavBrand href="/">
+      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-primary-700 dark:hover:text-primary-500">Justin Stas</span>
+    </NavBrand>
 
-  <div class="flex items-center md:order-2">
-    <DarkMode class="hover:text-primary-700 dark:hover:text-primary-500" />
-		<NavHamburger />
-  </div>
+    <div class="flex items-center md:order-2">
+      <DarkMode class="hover:text-primary-700 dark:hover:text-primary-500" />
+      <NavHamburger />
+    </div>
 
-  <NavUl {activeUrl} class="order-1">
-    {#each pages as page}
-      <NavLi href={page.href} class="dark:hover:text-primary-500!" activeClass="text-primary-700 dark:text-primary-500">{page.title}</NavLi>
-    {/each}
-	</NavUl>
-</Navbar>
+    <NavUl {activeUrl} class="order-1">
+      {#each pages as page}
+        <NavLi href={page.href} class="dark:hover:text-primary-500!" activeClass="text-primary-700 dark:text-primary-500">{page.title}</NavLi>
+      {/each}
+    </NavUl>
+  </Navbar>
+</div>

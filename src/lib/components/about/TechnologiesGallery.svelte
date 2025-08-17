@@ -25,12 +25,12 @@
   };
 </script>
 
-<div class="w-1/2 m-4 my-4">
-  <h2 class="text-2xl dark:text-white">Technologies</h2>
-  <p class="dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus vitae neque elementum cursus. Nullam sed semper velit. Phasellus.</p>
+<div class="w-full md:w-1/2 m-4 mx-auto">
+  <h2 class="mb-2 font-bold text-2xl dark:text-white">Technologies</h2>
+  <p class="text-justify dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus vitae neque elementum cursus. Nullam sed semper velit. Phasellus.</p>
 </div>
 
-<Gallery class="grid-cols-2 lg:grid-cols-4 gap-4">
+<Gallery class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
   {#each { length: 4 }, index}
   <Gallery items={getQuarter(index)}>
     {#snippet figure(item)}

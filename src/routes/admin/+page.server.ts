@@ -1,12 +1,20 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { createActivity, createLabel, createTechnology, deleteActivity, deleteLabel, deleteTechnology, editActivity, editLabel, editTechnology, getActivities, getLabels, getTechnologies } from '$lib/server';
+import { createActivity, createDegree, createJob, createLabel, createTechnology, deleteActivity, deleteDegree, deleteJob, deleteLabel, deleteTechnology, editActivity, editDegree, editJob, editLabel, editTechnology, getActivities, getDegrees, getJobs, getLabels, getTechnologies } from '$lib/server';
 
 export const load: PageServerLoad = async () => {
   return {
     activities: getActivities().then(activities => {
       if (!activities) { error(404, "Not found"); }
       return activities;
+    }),
+    degrees: getDegrees().then(degrees => {
+      if (!degrees) { error(404, "Not found"); }
+      return degrees;
+    }),
+    jobs: getJobs().then(jobs => {
+      if (!jobs) { error(404, "Not found"); }
+      return jobs;
     }),
     labels: getLabels().then(labels => {
       if (!labels) { error(404, "Not found"); }
@@ -21,12 +29,18 @@ export const load: PageServerLoad = async () => {
 
 export const actions = {
   createActivity,
+  createDegree,
+  createJob,
   createLabel,
   createTechnology,
   deleteActivity,
+  deleteDegree,
+  deleteJob,
   deleteLabel,
   deleteTechnology,
   editActivity,
+  editDegree,
+  editJob,
   editLabel,
   editTechnology
 } satisfies Actions;

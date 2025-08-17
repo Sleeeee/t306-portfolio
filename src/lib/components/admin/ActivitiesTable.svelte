@@ -3,11 +3,11 @@
   import { ActivityForm, BaseTable, DateCell, DeleteModal, ImageModal, LabelsCell, TextModal } from '$lib';
 
   interface Props {
-    activities: Activity[];
+    items: Activity[];
     labels: Label[];
   }
 
-  let { activities, labels }: Props = $props();
+  let { items, labels }: Props = $props();
 
   const columns: TableColumn[] = [
     { title: "Name", field: "name" },
@@ -27,19 +27,16 @@
   ];
 
   const formActions: FormActions = {
-    edit: "?/editActivity",
-    delete: "?/deleteActivity",
-    create: "?/createActivity"
-  }
+    edit: { action: "?/editActivity", component: ActivityForm },
+    delete: { action: "?/deleteActivity", component: DeleteModal },
+    create: { action: "?/createActivity", component: ActivityForm }
+  };
 </script>
 
 <BaseTable
   {columns}
   {formActions}
-  items={activities}
+  {items}
   {modals}
   {labels}
-  editComponent={ActivityForm}
-  deleteComponent={DeleteModal}
-  createComponent={ActivityForm}
 />

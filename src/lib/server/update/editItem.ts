@@ -3,7 +3,7 @@ import { unlink, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { randomUUID } from 'crypto';
 import prisma from '$lib/prisma';
-import { ActionResponse, Item, RawData, Table, Validation } from '$lib/types';
+import type { ActionResponse, Item, RawData, Table, Validation } from '$lib/types';
 import { validateId } from '$lib/server';
 
 interface Props {

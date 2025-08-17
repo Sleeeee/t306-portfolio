@@ -8,4 +8,4 @@ export const validImageFields: string[] = ["image", "proof"];
 
 export const validMimeTypes: string[] = ["image/jpeg", "image/png"];
 
-export const validTables: Table[] = ["activities", "labels", "technologies"];
+export const validTables: Table[] = ["activities", "degrees", "jobs", "labels", "technologies"];

@@ -16,25 +16,16 @@ model users {
 }
 
 model labels {
-  id           Int                 @id @default(autoincrement())
+  id           Int            @id @default(autoincrement())
   name         String
   color        String
   activities   activities[]
   technologies technologies[]
 }
 
-model technologies {
-  id          Int                 @id @default(autoincrement())
-  name        String
-  mastery     Int
-  description String?
-  image       String?
-  labels      labels[]
-}
-
 model activities {
-  id          Int               @id @default(autoincrement())
-  date        DateTime          @default(now())
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
   name        String
   description String?
   image       String?
@@ -42,4 +33,33 @@ model activities {
   time_valued Int
   time_real   Int
   proof       String?
+}
+
+model degrees {
+  id          Int       @id @default(autoincrement())
+  date_start  DateTime  @default(now())
+  date_end    DateTime?
+  degree      String
+  institution String
+  location    String
+  description String?
+}
+
+model jobs {
+  id          Int       @id @default(autoincrement())
+  date_start  DateTime  @default(now())
+  date_end    DateTime?
+  position    String
+  company     String
+  location    String
+  description String?
+}
+
+model technologies {
+  id          Int      @id @default(autoincrement())
+  name        String
+  mastery     Int
+  description String?
+  image       String?
+  labels      labels[]
 }

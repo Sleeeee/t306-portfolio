@@ -12,20 +12,18 @@
   const button: ButtonConfig = { icon: RectangleListOutline, onclick: openModal, text: "View summary" };
 </script>
 
-<div class="p-8">
-  <Hero
-    image="/favicon.png"
-    title="Training"
-    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis vulputate viverra. Etiam sit amet erat at orci laoreet semper a sit amet dui. Mauris."
-    {button}
-  />
+<Hero
+  image="/favicon.png"
+  title="Training"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis vulputate viverra. Etiam sit amet erat at orci laoreet semper a sit amet dui. Mauris."
+  {button}
+/>
 
-  {#await data.activities}
-    <CarouselSkeleton />
-  {:then activities}
-    <ActivitiesCarousel {activities} />
-    <ActivitiesModal {activities} bind:isOpen={isOpen} />
-  {:catch error}
-    <p class="text-red-800">Error fetching activities: {error}</p>
-  {/await}
-</div>
+{#await data.activities}
+  <CarouselSkeleton />
+{:then activities}
+  <ActivitiesCarousel {activities} />
+  <ActivitiesModal {activities} bind:isOpen={isOpen} />
+{:catch error}
+  <p class="text-red-800">Error fetching activities: {error}</p>
+{/await}

@@ -1,4 +1,5 @@
 export { default as AboutSections } from './components/about/AboutSections.svelte';
+export { default as BaseTimeline } from './components/about/BaseTimeline.svelte';
 export { default as EducationTimeline } from './components/about/EducationTimeline.svelte';
 export { default as ExperienceTimeline } from './components/about/ExperienceTimeline.svelte';
 export { default as TechnologiesGallery } from './components/about/TechnologiesGallery.svelte';
@@ -6,6 +7,10 @@ export { default as TechnologiesGallery } from './components/about/TechnologiesG
 export { default as ActivitiesTable } from './components/admin/ActivitiesTable.svelte';
 export { default as ActivityForm } from './components/admin/ActivityForm.svelte';
 export { default as AdminTabs } from './components/admin/AdminTabs.svelte';
+export { default as DegreeForm } from './components/admin/DegreeForm.svelte';
+export { default as DegreesTable } from './components/admin/DegreesTable.svelte';
+export { default as JobForm } from './components/admin/JobForm.svelte';
+export { default as JobsTable } from './components/admin/JobsTable.svelte';
 export { default as LabelForm } from './components/admin/LabelForm.svelte';
 export { default as LabelsTable } from './components/admin/LabelsTable.svelte';
 export { default as TechnologiesTable } from './components/admin/TechnologiesTable.svelte';

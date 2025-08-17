@@ -1,11 +1,14 @@
 <script lang="ts">
-  import type { Activity } from '$lib/types';
+  import type { Item } from '$lib/types';
 
   interface Props {
-    item: Activity;
+    field: string | undefined;
+    item: Item;
   }
 
-  let { item }: Props = $props();
+  let { field, item }: Props = $props();
+
+  const dateField: string = (field) ? field : "date";
 </script>
 
-{item.date.toLocaleDateString()}
+{item[dateField]?.toLocaleDateString()}

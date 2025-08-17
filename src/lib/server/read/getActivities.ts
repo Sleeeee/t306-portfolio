@@ -1,5 +1,5 @@
 import prisma from '$lib/prisma';
-import { Activity } from '$lib/types';
+import type { Activity } from '$lib/types';
 
 export const getActivities = async (): Promise<Activity[]> => {
   const activities: Activity[] = await prisma.activities.findMany({

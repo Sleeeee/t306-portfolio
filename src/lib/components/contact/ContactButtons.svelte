@@ -35,13 +35,13 @@
   };
 </script>
 
-<div class="flex justify-around w-1/2 my-8 mx-auto">
+<div class="flex flex-col sm:flex-row justify-around gap-4 sm:max-w-full lg:max-w-1/2 my-8 mx-auto">
   {#each items as item, i}
-    <Button href={item.href} target="_blank" onmouseenter={() => { displayText(i); }} onmouseleave={eraseText} pill class="p-4">
+    <Button href={item.href} target="_blank" onmouseenter={() => { displayText(i); }} onmouseleave={eraseText} pill class="mx-auto p-4">
       {@const Icon = item.icon}
       <Icon class="h-16 w-16 dark:text-gray-700 hover:text-gray-200" />
     </Button>
   {/each}
 </div>
 
-<p class="text-center text-2xl dark:text-white">{displayedText}</p>
+<p class="mb-4 text-center text-2xl dark:text-white">{displayedText}</p>

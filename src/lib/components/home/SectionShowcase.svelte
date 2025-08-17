@@ -66,7 +66,7 @@
         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold">{items[activeIndex].title}</h2>
       </div>
 
-      <p class="max-w-full sm:max-w-2/3 lg:max-w-1/2 mx-auto mb-8 text-sm sm:text-base">{items[activeIndex].description}</p>
+      <p class="max-w-full sm:max-w-2/3 lg:max-w-1/2 mx-auto mb-8 p-1 text-sm sm:text-base">{items[activeIndex].description}</p>
 
       <Button href={items[activeIndex].name} size="lg"  class="mx-auto gap-2">View more <ArrowRightOutline /></Button>
     </div>
