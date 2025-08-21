@@ -10,11 +10,13 @@ services:
   sveltekit:
     container_name: portfolio-sveltekit
     build:
+      context: ./sveltekit
       dockerfile: Dockerfile.dev
     env_file:
       - .env.prisma
+      - .env.sveltekit
     volumes:
-      - ./:/app
+      - ./sveltekit:/app
       - /app/node_modules
       - uploads:/app/static/uploads
     ports:

@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  username   String   @unique
+  passkeys   passkeys[]
+}
+
+model passkeys {
+  cred_id         String    @id @db.Text
+  cred_public_key Bytes
+  user_id         Int
+  counter         Int
+  backup_eligible Boolean
+  backup_status   Boolean
+  transports      String[]
+  created_at      DateTime  @default(now())
+  last_used       DateTime?
+
+  user            users @relation(fields: [user_id], references: [id])
+}
+
+model sessions {
+  id          String   @id @db.Text
+  secret_hash Bytes
+  created_at  DateTime @default(now())
+}
+
+model labels {
+  id           Int            @id @default(autoincrement())
+  name         String
+  color        String
+  activities   activities[]
+  technologies technologies[]
+}
+
+model activities {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  name        String
+  description String?
+  image       String?
+  labels      labels[]
+  time_valued Int
+  time_real   Int
+  proof       String?
+}
+
+model degrees {
+  id          Int       @id @default(autoincrement())
+  date_start  DateTime  @default(now())
+  date_end    DateTime?
+  degree      String
+  institution String
+  location    String
+  description String?
+}
+
+model jobs {
+  id          Int       @id @default(autoincrement())
+  date_start  DateTime  @default(now())
+  date_end    DateTime?
+  position    String
+  company     String
+  location    String
+  description String?
+}
+
+model technologies {
+  id          Int      @id @default(autoincrement())
+  name        String
+  mastery     Int
+  description String?
+  image       String?
+  labels      labels[]
+}

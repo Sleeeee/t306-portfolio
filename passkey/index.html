@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<head>
+  <style>
+    * {
+      font-family: "mono";
+      color: white;
+    }
+    body {
+      background-color: oklch(37.3% 0.034 259.733);
+    }
+    main {
+      margin: 1/5;
+    }
+    div {
+      margin: 20px;
+    }
+    button {
+      padding: 4px;
+      border: none;
+      border-radius: 5px;
+      background-color: #eb4f27;
+    }
+    select {
+      padding: 4px;
+      border: 1px solid #eb4f27;
+      border-radius: 5px;
+      color: black;
+    }
+  </style>
+
+  <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+
+  <script type="module">
+    const { startRegistration } = SimpleWebAuthnBrowser;
+
+    const HOST = "localhost";
+    const PORT = "8080";
+
+    const deleteSelect = document.getElementById("delete-passkey-select");
+    const responseDisplay = document.getElementById("response-display");
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const response = await fetch(`http://${HOST}:${PORT}/passkeys`);
+      for (let passkey of await response.json()) {
+        deleteSelect.innerHTML += `<option value=${passkey.id}>${passkey.id.slice(0, 10)}</option>`;
+      }
+    });
+
+    document.getElementById("register-admin-button").addEventListener("click", async () => {
+      const response = await fetch(`http://${HOST}:${PORT}/register-admin`, {
+        method: "POST"
+      });
+      responseDisplay.innerText = await response.text();
+    });
+
+    document.getElementById("register-passkey-button").addEventListener("click", async () => {
+      const requestResp = await fetch(`http://${HOST}:${PORT}/register-request`, {
+        method: "POST"
+      });
+      const contentType = requestResp.headers.get("content-type");
+      if (contentType === "text/plain") {
+        responseDisplay.innerText = await requestResp.text();
+
+      } else if (contentType === "application/json") {
+        const optionsJSON = await requestResp.json();
+
+        let attResp;
+        try {
+          attResp = await startRegistration({ optionsJSON });
+        } catch (error) {
+          if (error.name === 'InvalidStateError') {
+            responseDisplay.innerText = 'Error: Authenticator was probably already registered by user';
+          } else {
+            responseDisplay.innerText = error;
+          }
+          throw error;
+        }
+
+        const verifyResp = await fetch(`http://${HOST}:${PORT}/register-verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(attResp)
+        });
+        const verifyJSON = await verifyResp.json();
+        console.log(verifyJSON);
+        if (verifyJSON && verifyJSON.verified) {
+          responseDisplay.innerText = "Your admin passkey was successfully registered";
+        } else {
+          responseDisplay.innerHTML = `Error verifying passkey. Response: <pre>${JSON.stringify(verifyJSON)}</pre>`;
+        }
+      }
+    });
+
+    document.getElementById("delete-passkey-button").addEventListener("click", async () => {
+      const response = await fetch(`http://${HOST}:${PORT}/passkeys`, {
+        method: "DELETE",
+        headers: { "Content-Type": "text/plain" },
+        body: deleteSelect.value
+      });
+      responseDisplay.innerText = await response.text();
+    });
+
+    document.getElementById("shutdown-button").addEventListener("click", () => {
+      fetch(`http://${HOST}:${PORT}/shutdown`, {
+        method: "POST"
+      });
+      responseDisplay.innerText = "Server shutdown initialized. You can now close this window";
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Admin Passkey Manager</h1>
+
+  <main>
+    <div>
+      <button id="register-admin-button">Init admin user</button>
+      <button id="register-passkey-button">Register passkey</button>
+    </div>
+
+    <div>
+      <select id="delete-passkey-select"></select>
+      <button id="delete-passkey-button">Delete passkey</button>
+    </div>
+
+    <div>
+      <button id="shutdown-button">Shutdown server</button>
+    </div>
+
+    <p id="response-display"></p>
+  </main>
+</body>
