@@ -9,7 +9,7 @@
   let { technologies }: Props = $props();
 
   const blankTechnologies: Technology[] = [{ name: "No items found", labels: [], mastery: 0, description: "There is nothing to be displayed for now. Please come back later !", image: "/favicon.png" }];
-  const displayedTechnologies: Technology[] = technologies?.length ? technologies : blankTechnologies;
+  const displayedTechnologies: Technology[] = $derived(technologies?.length ? technologies : blankTechnologies);
 
   const getQuarter = (index: number): Technology[] => {
     const baseSize: number = Math.floor(displayedTechnologies.length / 4);

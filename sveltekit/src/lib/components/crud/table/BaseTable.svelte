@@ -15,25 +15,32 @@
 
   let { columns, formActions, items, modals, labels }: Props = $props();
 
+  let isEditOpen: boolean = $state(false);
+  let isDeleteOpen: boolean = $state(false);
+  let isCreateOpen: boolean = $state(false);
+
   let activeDialog: string | null = $state(null);
   let itemIndex: number | null = $state(null);
 
   const openDialog = (dialogType: string, index: number | null = null): void => {
-    activeDialog = dialogType;
     itemIndex = index;
+    if (dialogType === "edit") isEditOpen = true;
+    else if (dialogType === "delete") isDeleteOpen = true;
+    else if (dialogType === "create") isCreateOpen = true;
+    else activeDialog = dialogType;
   };
+
   const closeDialog = (): void => {
+    isEditOpen = false;
+    isDeleteOpen = false;
+    isCreateOpen = false;
     activeDialog = null;
     itemIndex = null;
   };
-
-  let isEditHidden: boolean = $derived(activeDialog !== "edit");
-  let isDeleteOpen: boolean = $derived(activeDialog === "delete");
-  let isCreateHidden: boolean = $derived(activeDialog !== "create");
 </script>
 
 {#if formActions?.edit}
-  <Drawer bind:hidden={isEditHidden} placement="right" closeDrawer={closeDialog}>
+  <Drawer bind:open={isEditOpen} placement="right" closeDrawer={closeDialog}>
     {@const EditComponent = formActions.edit.component}
     <EditComponent {closeDialog} formAction={formActions.edit.action} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>
@@ -47,7 +54,7 @@
 {/if}
 
 {#if formActions?.create}
-  <Drawer bind:hidden={isCreateHidden} closeDrawer={closeDialog}>
+  <Drawer bind:open={isCreateOpen} closeDrawer={closeDialog}>
     {@const CreateComponent = formActions.create.component}
     <CreateComponent {closeDialog} formAction={formActions.create.action} item={itemIndex !== null ? items[itemIndex] : null} {labels} />
   </Drawer>

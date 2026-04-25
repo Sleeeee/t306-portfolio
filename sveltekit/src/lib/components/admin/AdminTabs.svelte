@@ -14,13 +14,13 @@
 
   let { activities, degrees, jobs, labels, technologies }: Props = $props();
 
-  const tabs = [
-    { title: "Activities", component: ActivitiesTable, icon: FolderOpenSolid, items: activities, labels, open: true },
+  const tabs = $derived([
+    { title: "Activities", component: ActivitiesTable, icon: FolderOpenSolid, items: activities, labels: labels, open: true },
     { title: "Degrees", component: DegreesTable, icon: GraduationCapSolid, items: degrees },
     { title: "Jobs", component: JobsTable, icon: BriefcaseSolid, items: jobs },
     { title: "Labels", component: LabelsTable, icon: LabelSolid, items: labels },
     { title: "Technologies", component: TechnologiesTable, icon: LaptopCodeSolid, items: technologies, labels }
-  ];
+  ]);
 </script>
 
 <Tabs tabStyle="underline">

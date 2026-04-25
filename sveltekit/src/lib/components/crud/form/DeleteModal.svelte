@@ -37,8 +37,11 @@
     }
   });
 
-  if (!item.name && item.degree && item.institution) { item.name = `${item.degree} @ ${item.institution}` }
-  else if (!item.name && item.position && item.company) { item.name = `${item.position} @ ${item.company}` }
+  const displayName = $derived(item.name ||
+    (item.degree && item.institution ? `${item.degree} @ ${item.institution}` : item.degree) ||
+    (item.position && item.company ? `${item.position} @ ${item.company}` : item.position) ||
+    ""
+  );
 </script>
 
 {#if formResponse}
@@ -50,7 +53,7 @@
 
   <ExclamationCircleOutline class="mb-4 mx-auto w-12 h-12" />
   <h3 class="mb-4 text-center">
-    Are you sure you want to delete <strong class="font-bold">{item?.name || item?.degree || item?.position}</strong> ?
+    Are you sure you want to delete <strong class="font-bold">{displayName}</strong> ?
   </h3>
   <div class="flex justify-center gap-4">
     <Button type="submit" value="delete">Delete</Button>

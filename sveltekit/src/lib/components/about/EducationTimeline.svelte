@@ -10,13 +10,13 @@
 
   let { degrees }: Props = $props();
 
-  const items: TimelineItemConfig[] = degrees.map(degree => ({
+  const items: TimelineItemConfig[] = $derived(degrees.map(degree => ({
     title: `${degree.degree} @ ${degree.institution}`,
     date: `${degree.date_start.toLocaleString(undefined, { month: "short", year: "numeric" })} - ${degree.date_end?.toLocaleDateString(undefined, { month: "short", year: "numeric" }) || "Present"}`,
     icon: GraduationCapSolid,
     location: degree.location,
     description: degree.description
-  }));
+  })));
 </script>
 
 <div class="w-full md:w-1/2 m-4 mx-auto">

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Activity, ImageProps } from '$lib/types';
-	import { Badge, Carousel, Controls, Indicators } from 'flowbite-svelte';
+	import { Badge, Carousel, Controls } from 'flowbite-svelte';
 
   interface Props {
     activities: Activity[];
@@ -9,12 +9,12 @@
   let { activities }: Props = $props();
 
   const blankActivities: Activity[] = [{ name: "No items found", labels: [], date: new Date(), time_valued: 0, time_real: 0, description: "There is nothing to be displayed for now. Please come back later !", image: "/favicon.png", proof: "/favicon.png" }];
-  const displayedActivities: Activity[] = activities?.length ? activities : blankActivities;
+  const displayedActivities: Activity[] = $derived(activities?.length ? activities : blankActivities);
 
-  const images: ImageProps[] = displayedActivities.map(a => ({
+  const images: ImageProps[] = $derived(displayedActivities.map(a => ({
     src: a.image,
     alt: a.name
-  }));
+  })));
 
   let index: number = $state(0);
 </script>
@@ -23,7 +23,6 @@
   <Carousel {images} bind:index>
     {#if images.length > 1}
       <Controls />
-      <Indicators />
     {/if}
   </Carousel>
   <div class="m-6 p-4 lg:w-4/5 mx-auto">

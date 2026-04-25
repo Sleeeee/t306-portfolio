@@ -15,12 +15,17 @@
 
   let { closeDialog, fields, formAction, item, itemType }: Props = $props();
 
-  const blankItem: Record<string, any> = Object.fromEntries(fields.map(field => [field.title, field.defaultValue]));
-  const formItem: Record<string, any> = $state(item || blankItem);
-  if (item?.labels) {
-    formItem.labels = item.labels.map((l) => (l.id));
+  function getInitialState() {
+    const blank = Object.fromEntries(fields.map(field => [field.title, field.defaultValue]));
+    const initialState = item ? { ...item } : blank; 
+
+  if (initialState?.labels) {
+      initialState.labels = initialState.labels.map((l: any) => l.id);
+    }
+    return initialState;
   }
 
+  let formItem: Record<string, any> = $state(getInitialState());
   let formResponse: ActionResponse | null = $state(null);
   let loading: boolean = $state(false);
 
@@ -73,7 +78,6 @@
   <h5 class="font-bold dark:text-white">
     {(item) ? "Edit" : "Create"} {itemType}
   </h5>
-  <CloseButton onclick={closeDialog} />
 </div>
 
 {#if formResponse}

@@ -10,8 +10,8 @@
 
   let { type, onclick }: Props = $props();
 
-  const text: string = (type === "image") ? "View" : "Read";
-  const Icon: Component = (type === "image") ? ImageOutline : BookOpenOutline;
+  const text: string = $derived((type === "image") ? "View" : "Read");
+  const Icon: Component = $derived((type === "image") ? ImageOutline : BookOpenOutline);
 </script>
 
 <Button outline size="xs" onclick={onclick} class="gap-2">

@@ -1,13 +1,13 @@
 FROM node:24.2-alpine
 WORKDIR /app
 
-COPY package.json .
+COPY package.json ./
 
 RUN npm install
 
-COPY schema.prisma .
+COPY schema.prisma ./
 RUN npx prisma generate
 
-COPY index.html server.js .
+COPY index.html server.js ./
 
 CMD ["npm", "start"]

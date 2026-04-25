@@ -8,7 +8,7 @@
 
   let { field, item }: Props = $props();
 
-  const dateField: string = (field) ? field : "date";
+  const dateField: string = $derived(field ? field : "date");
 </script>
 
 {item[dateField]?.toLocaleDateString()}

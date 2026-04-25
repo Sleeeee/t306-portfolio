@@ -9,9 +9,12 @@
 
   let { data }: PageProps = $props();
 
-  let response: ActionResponse | null = $state(data?.response);
-  let optionsString: string | null = $state(data?.options);
-  let optionsArray: string[] = $derived(optionsString?.split("."));
+  function initResponse() { return data?.response; }
+  function initOptions() { return data?.options; }
+
+  let response: ActionResponse | null = $state(initResponse());
+  let optionsString: string | null = $state(initOptions());
+  let optionsArray: string[] = $derived(optionsString?.split(".") ?? []);
 
   $effect(() => {
     if (optionsString && (optionsArray.length !== 2)) {
@@ -25,8 +28,8 @@
     if (optionsArray[0]) {
       isAuthenticating = true;
 
-      const optionsJSON: PublicKeyCredentialRequestOptionsJSON = JSON.parse(optionsArray[0]);
       try {
+        const optionsJSON: PublicKeyCredentialRequestOptionsJSON = JSON.parse(optionsArray[0]);
         const authResponse = await startAuthentication({ optionsJSON });
         formData.append("response", JSON.stringify(authResponse));
       } catch (error) {

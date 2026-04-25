@@ -13,5 +13,5 @@
 
 <div class="mb-4">
   <Label>{label}</Label>
-  <Textarea bind:value={value} {name} rows=5 {placeholder} required />
+  <Textarea bind:value={value} {name} rows=5 {placeholder} class="w-full" required />
 </div>

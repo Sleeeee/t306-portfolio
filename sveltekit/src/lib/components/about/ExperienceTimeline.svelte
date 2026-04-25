@@ -10,13 +10,13 @@
 
   let { jobs }: Props = $props();
 
-  const items: TimelineItemConfig[] = jobs.map(job => ({
+  const items: TimelineItemConfig[] = $derived(jobs.map(job => ({
     title: `${job.position} @ ${job.company}`,
     date: `${job.date_start.toLocaleString(undefined, { month: "short", year: "numeric" })} - ${job.date_end?.toLocaleDateString(undefined, { month: "short", year: "numeric" }) || "Present"}`,
     icon: BriefcaseSolid,
     location: job.location,
     description: job.description
-  }));
+  })));
 </script>
 
 <div class="w-full md:w-1/2 m-4 mx-auto">
