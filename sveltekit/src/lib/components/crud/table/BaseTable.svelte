@@ -67,45 +67,47 @@
   </Modal>
 {/each}
 
-<Table hoverable class="text-center">
-  <TableHead>
-    {#each columns as column}
-      <TableHeadCell>{column.title}</TableHeadCell>
-    {/each}
-    {#if formActions?.edit || formActions?.delete}
-      <TableHeadCell>Actions</TableHeadCell>
-    {/if}
-  </TableHead>
-  <TableBody>
-    {#each items as item, i}
-      <TableBodyRow>
-        {#each columns as column}
-          <TableBodyCell class="!text-wrap">
-            {#if column.component}
-              {@const ColumnComponent = column.component}
-              <ColumnComponent {item} field={column.field} />
-            {:else if column.button}
-              <ModalButton type={column.button.type} onclick={() => { openDialog(column.button.key, i); }} />
-            {:else}
-              {item[column.field]}
-            {/if}
-          </TableBodyCell>
-        {/each}
-        {#if formActions?.edit || formActions?.delete}
-          <TableBodyCell>
-            {#if formActions.edit}
-              <Button size="xs" onclick={() => { openDialog("edit", i); }} class="dark:text-gray-300" pill><EditOutline /></Button>
-            {/if}
-            {#if formActions.delete}
-              <Button size="xs" onclick={() => { openDialog("delete", i)}} class="dark:text-gray-300" pill><TrashBinOutline /></Button>
-            {/if}
-          </TableBodyCell>
-        {/if}
-      </TableBodyRow>
-    {/each}
-  </TableBody>
-</Table>
+<div class="bg-pattern-soft rounded-lg">
+  <Table hoverable class="text-center">
+    <TableHead>
+      {#each columns as column}
+        <TableHeadCell>{column.title}</TableHeadCell>
+      {/each}
+      {#if formActions?.edit || formActions?.delete}
+        <TableHeadCell>Actions</TableHeadCell>
+      {/if}
+    </TableHead>
+    <TableBody>
+      {#each items as item, i}
+        <TableBodyRow>
+          {#each columns as column}
+            <TableBodyCell class="!text-wrap">
+              {#if column.component}
+                {@const ColumnComponent = column.component}
+                <ColumnComponent {item} field={column.field} />
+              {:else if column.button}
+                <ModalButton type={column.button.type} onclick={() => { openDialog(column.button.key, i); }} />
+              {:else}
+                {item[column.field]}
+              {/if}
+            </TableBodyCell>
+          {/each}
+          {#if formActions?.edit || formActions?.delete}
+            <TableBodyCell>
+              {#if formActions.edit}
+                <Button size="xs" onclick={() => { openDialog("edit", i); }} class="dark:text-gray-300" pill><EditOutline /></Button>
+              {/if}
+              {#if formActions.delete}
+                <Button size="xs" onclick={() => { openDialog("delete", i)}} class="dark:text-gray-300" pill><TrashBinOutline /></Button>
+              {/if}
+            </TableBodyCell>
+          {/if}
+        </TableBodyRow>
+      {/each}
+    </TableBody>
+  </Table>
 
-{#if formActions?.create}
-  <Button size="xs" onclick={() => { openDialog("create", null)}} pill class="mt-4 ml-4 dark:text-gray-300"><PlusOutline /></Button>
-{/if}
+  {#if formActions?.create}
+    <Button size="xs" onclick={() => { openDialog("create", null)}} pill class="mt-4 ml-4 dark:text-gray-300"><PlusOutline /></Button>
+  {/if}
+</div>

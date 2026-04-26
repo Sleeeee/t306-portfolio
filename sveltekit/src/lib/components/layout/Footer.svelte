@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Footer, FooterCopyright, FooterIcon } from 'flowbite-svelte';
-	import { FlowbiteSolid, GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
+  import { Footer, FooterCopyright, FooterIcon } from 'flowbite-svelte';
+  import { FlowbiteSolid, GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
 </script>
 
-<Footer class="mt-4 text-center">
-	<FooterCopyright href="/" by="Justin Stas" year={2025} />
+<Footer class="mt-2 text-center bg-pattern-soft">
+  <FooterCopyright href="/" by="Justin Stas" year={2025} class="p-2 backdrop-blur-sm bg-white/5 rounded-lg" />
 
-  <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-center justify-center text-sm sm:text-base">
+  <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 p-2 text-center justify-center text-sm sm:text-base backdrop-blur-sm bg-white/5 rounded-lg">
     <p class="text-gray-500 dark:text-gray-400 flex items-center gap-1">
       Built with love using
       <a href="https://svelte.dev" target="_blank" class="hover:underline">SvelteKit</a>
@@ -24,17 +24,17 @@
     <FlowbiteSolid class="h-8 w-8 text-primary-700" />
   </div>
 
-	<div class="flex justify-center gap-2">
-		<FooterIcon href="https://github.com/Sleeeee" target="_blank">
-			<GithubSolid
-				class="h-8 w-8 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-			/>
-		</FooterIcon>
+  <div class="flex justify-center gap-2 p-2 backdrop-blur-sm bg-white/5 rounded-lg">
+    <FooterIcon href="https://github.com/Sleeeee" target="_blank">
+      <GithubSolid
+        class="h-8 w-8 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+      />
+    </FooterIcon>
 
-		<FooterIcon href="https://linkedin.com/in/justin-stas-82453a271" target="_blank">
-			<LinkedinSolid
-				class="h-8 w-8 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-			/>
-		</FooterIcon>
-	</div>
+    <FooterIcon href="https://linkedin.com/in/justin-stas-82453a271" target="_blank">
+      <LinkedinSolid
+        class="h-8 w-8 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+      />
+    </FooterIcon>
+  </div>
 </Footer>

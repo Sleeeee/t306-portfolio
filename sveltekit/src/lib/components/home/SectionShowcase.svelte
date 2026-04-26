@@ -37,7 +37,8 @@
   }
 
   const showcaseSection = (event): void => {
-    const index: number = items.findIndex(item => item.name === event.detail.name);
+    const index: number = items.findIndex(item => item.name === event.target.innerText);
+    if (index < 0) return;
     activeIndex = index;
 
     if (animation) {
@@ -57,10 +58,11 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="relative my-8 p-4 w-full min-h-[500px] bg-gray-50 text-gray-800 dark:bg-gray-800 dark:text-white text-center rounded-lg">
+<div class="relative my-8 p-4 w-full min-h-[500px] bg-pattern-soft text-gray-800 dark:text-white text-center rounded-lg">
   {#key activeIndex}
     <div in:fly={{ x: 300, duration: 500 }} out:fly={{ x:-300, duration: 500 }} class="absolute flex flex-col justify-center inset-0 w-full mx-auto p-0">
 
+      <div class="w-2/3 mx-auto p-4 backdrop-blur-sm bg-white/5 rounded-lg">
       <div class="flex flex-col md:flex-row justify-around items-center w-1/2 mx-auto mb-8">
         <Avatar src={items[activeIndex].src} size="xl" class="" />
         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold">{items[activeIndex].title}</h2>
@@ -69,6 +71,7 @@
       <p class="max-w-full sm:max-w-2/3 lg:max-w-1/2 mx-auto mb-8 p-1 text-sm sm:text-base">{items[activeIndex].description}</p>
 
       <Button href={items[activeIndex].name} size="lg"  class="mx-auto gap-2">View more <ArrowRightOutline /></Button>
+      </div>
     </div>
   {/key}
 </div>

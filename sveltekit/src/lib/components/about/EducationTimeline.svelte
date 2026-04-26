@@ -19,7 +19,7 @@
   })));
 </script>
 
-<div class="w-full md:w-1/2 m-4 mx-auto">
+<div class="w-full md:w-1/2 m-4 mx-auto p-4 backdrop-blur-sm bg-white/5 rounded-lg">
   <h2 class="mb-2 font-bold text-2xl dark:text-white">Education</h2>
   <p class="text-justify dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at purus vitae neque elementum cursus. Nullam sed semper velit. Phasellus.</p>
 </div>

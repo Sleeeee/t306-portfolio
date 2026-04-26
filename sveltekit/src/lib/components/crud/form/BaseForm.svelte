@@ -2,7 +2,7 @@
   import { enhance } from '$app/forms';
   import type { ActionResponse, FormField, Item } from '$lib/types';
   import { validImageFields } from '$lib/constants';
-  import { Button, CloseButton } from 'flowbite-svelte';
+  import { Button } from 'flowbite-svelte';
   import { FeedbackAlert } from '$lib';
 
   interface Props {

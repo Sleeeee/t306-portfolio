@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Activity, ImageProps } from '$lib/types';
-	import { Badge, Carousel, Controls } from 'flowbite-svelte';
+  import { Badge, Carousel, Controls } from 'flowbite-svelte';
 
   interface Props {
     activities: Activity[];
@@ -19,13 +19,13 @@
   let index: number = $state(0);
 </script>
 
-<div class="border rounded-lg bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-md">
+<div class="bg-pattern-soft rounded-lg shadow-md pb-1">
   <Carousel {images} bind:index>
     {#if images.length > 1}
       <Controls />
     {/if}
   </Carousel>
-  <div class="m-6 p-4 lg:w-4/5 mx-auto">
+  <div class="m-10 p-4 lg:w-4/5 mx-auto backdrop-blur-sm bg-white/5 rounded-lg">
     <div class="flex mb-2 gap-2">
       {#each displayedActivities[index]?.labels as label}
         <Badge color={label.color}>{label.name}</Badge>

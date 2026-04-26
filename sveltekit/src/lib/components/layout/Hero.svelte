@@ -13,12 +13,12 @@
   let { image, title, description, button }: Props = $props();
 </script>
 
-<div class="m-6 flex flex-col md:flex-row justify-around items-center gap-4 text-center md:text-left dark:text-white">
+<div class="bg-pattern-hard p-6 mb-4 rounded-lg flex flex-col md:flex-row justify-around items-center gap-4 text-center md:text-left dark:text-white">
   {#if image}
     <Avatar src={image} size="xl" border class="md:order-2" />
   {/if}
 
-  <div class="w-4/5 md:w-2/5 order-1">
+  <div class="w-4/5 md:w-2/5 p-4 order-1 backdrop-blur-sm rounded-lg bg-white/5">
     <h1 class="mb-4 text-4xl font-bold">{title}</h1>
     <p>{description}</p>
 

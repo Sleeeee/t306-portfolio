@@ -1,10 +1,12 @@
 <script lang="ts">
-  import type { Section, Technology } from '$lib/types';
+  import type { Degree, Job, Section, Technology } from '$lib/types';
   import { Listgroup, ListgroupItem } from 'flowbite-svelte';
   import { BriefcaseSolid, GraduationCapSolid, LaptopCodeSolid } from 'flowbite-svelte-icons';
 	import { EducationTimeline, ExperienceTimeline, TechnologiesGallery } from '$lib';
 
   interface Props {
+    degrees: Degree[];
+    jobs: Job[];
     technologies: Technology[];
   }
 
@@ -44,22 +46,31 @@
 
 <Listgroup active horizontal class="sticky top-16 md:top-23 mb-8 z-10">
   {#each items as item}
-    <ListgroupItem current={item.current} onclick={() => { navigate(item.element) }} class="justify-center">
-      {@const Icon = item.Icon}
-      <Icon />
-      <p class="hidden sm:block">{item.name}</p>
+    {@const Icon = item.Icon} 
+
+    <ListgroupItem current={item.current} class="p-0 {item.current ? '' : 'cursor-pointer'}">
+      <button 
+        type="button"
+        onclick={() => navigate(item.element)}
+        class="flex items-center justify-center gap-2 w-full h-full px-4 py-2.5 bg-transparent border-none focus:outline-none"
+      >
+        <Icon class="w-5 h-5" />
+        <span class="hidden sm:inline">{item.name}</span>
+      </button>
     </ListgroupItem>
   {/each}
 </Listgroup>
 
-<div bind:this={items[0].element} class="my-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+
+
+<div bind:this={items[0].element} class="my-8 p-4 rounded-lg bg-pattern-soft">
   <TechnologiesGallery {technologies} />
 </div>
 
-<div bind:this={items[1].element} class="my-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+<div bind:this={items[1].element} class="my-8 p-4 rounded-lg bg-pattern-soft">
   <ExperienceTimeline {jobs} />
 </div>
 
-<div bind:this={items[2].element} class="mt-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+<div bind:this={items[2].element} class="mt-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 bg-pattern-soft">
   <EducationTimeline {degrees} />
 </div>
