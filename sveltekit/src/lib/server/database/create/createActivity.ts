@@ -1,6 +1,7 @@
 import type { FormData } from '$types';
 import type { ActionResponse, RawData } from '$lib/types';
-import { createItem, validateDate, validateImage, validateInt, validateLabels } from '$lib/server/validators';
+import { createItem } from '$lib/server/database';
+import { validateDate, validateImage, validateInt, validateLabels } from '$lib/server/validators';
 
 export const createActivity = async ({ cookies, request }): Promise<ActionResponse> => {
   const data: FormData = await request.formData();
