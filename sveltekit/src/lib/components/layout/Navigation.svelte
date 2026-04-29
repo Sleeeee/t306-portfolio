@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { page } from "$app/state";
-  import type { NavigationPage } from '$ib/types';
-	import { DarkMode, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+  import { page } from '$app/state';
+  import type { NavigationPage } from '$lib/types';
+	import { Avatar, DarkMode, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
 	import { GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
 
   let activeUrl = $derived(page.url.pathname);
@@ -17,7 +17,9 @@
 
 <div class="relative">
   <Navbar class="fixed start-0 top-0 z-50 bg-pattern-soft font-mono">
-    <NavBrand href="/" class="p-4 backdrop-blur-sm bg-white/5 rounded-lg">
+    <NavBrand href="/" class="gap-2 p-4 backdrop-blur-sm bg-white/5 rounded-lg">
+      <Avatar src="/avatar_about_light.png" size="md" class="dark:hidden" />
+      <Avatar src="/avatar_about_dark.png" size="md" class="hidden dark:block" />
       <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-primary-700 dark:hover:text-primary-500">Justin Stas</span>
     </NavBrand>
 

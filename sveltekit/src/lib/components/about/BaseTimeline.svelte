@@ -10,7 +10,7 @@
   let { items }: Props = $props();
 </script>
 
-<Timeline order="vertical" class="w-4/5 lg:w-1/2 mx-auto dark:text-white">
+<Timeline order="vertical" class="w-4/5 lg:w-1/2 mx-auto p-4 dark:text-white backdrop-blur-sm bg-white/5 rounded-lg">
   {#each items as item}
     <TimelineItem title={item.title}>
       {#snippet orientationSlot()}

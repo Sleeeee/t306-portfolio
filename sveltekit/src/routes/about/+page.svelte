@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
+  import type { PageProps } from './$types';
   import type { ButtonConfig, Degree, Job, Technology } from '$lib/types';
   import { ProfileCardOutline } from 'flowbite-svelte-icons';
-	import { AboutSections, Hero } from '$lib';
+  import { AboutSections, Hero } from '$lib';
+  import { aboutDescription } from '$lib/constants';
 
-	let { data }: PageProps = $props();
+  let { data }: PageProps = $props();
 
   const aboutData: Promise<[Degree[], Job[], Technology[]]> = $derived(Promise.all([data.degrees, data.jobs, data.technologies]));
 
@@ -12,9 +13,10 @@
 </script>
 
 <Hero
-  image="/favicon.png"
+  imageLight="/avatar_about_light.png"
+  imageDark="/avatar_about_dark.png"
   title="About me"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis libero viverra, fermentum odio nec, sodales ipsum. Morbi."
+  description={aboutDescription}
   {button}
 />
 

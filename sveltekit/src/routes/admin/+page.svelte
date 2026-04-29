@@ -3,6 +3,7 @@
   import type { Activity, ButtonConfig, Degree, Job, Label, Technology } from '$lib/types';
   import { ArrowRightToBracketOutline } from 'flowbite-svelte-icons';
   import { AdminTabs, Hero, TableSkeleton } from '$lib';
+  import { adminDescription } from '$lib/constants';
 
   let { data }: PageProps = $props();
 
@@ -13,7 +14,7 @@
 <Hero
   image="/favicon.png"
   title="Admin panel"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet arcu finibus, varius augue ac."
+  description={adminDescription}
   {button}
 />
 

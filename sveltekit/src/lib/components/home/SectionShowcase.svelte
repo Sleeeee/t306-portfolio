@@ -3,11 +3,12 @@
   import { Avatar, Button, Listgroup, Sidebar, SidebarGroup, SidebarItem } from 'flowbite-svelte';
   import { ArrowRightOutline, PlayOutline, PauseOutline } from 'flowbite-svelte-icons';
   import { fly } from 'svelte/transition';
+  import { aboutDescription, trainingDescription, contactDescription } from '$lib/constants';
 
   const items = $state([
-    { name: "/about", src: "/favicon.png", title: "About me", current: true, description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur  lacus eu vehicula tempor. Aliquam feugiat dui in nisi vulputate aliquet." },
-    { name: "/training", src: "/favicon.png", title: "Training", current: false, description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur  lacus eu vehicula tempor. Aliquam feugiat dui in nisi vulputate aliquet." },
-    { name: "/contact", src: "/favicon.png", title: "Contact me", current: false, description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur  lacus eu vehicula tempor. Aliquam feugiat dui in nisi vulputate aliquet." }
+    { name: "/about", srcLight: "/avatar_about_light.png", srcDark: "/avatar_about_dark.png", title: "About me", current: true, description: aboutDescription },
+    { name: "/training", srcLight: "/avatar_training_light.png", srcDark: "/avatar_training_dark.png", title: "Training", current: false, description: trainingDescription },
+    { name: "/contact", srcLight: "/avatar_contact_light.png", srcDark: "/avatar_contact_dark.png", title: "Contact me", current: false, description: contactDescription }
   ]);
 
   let animation: boolean = $state(true);
@@ -64,7 +65,8 @@
 
       <div class="w-2/3 mx-auto p-4 backdrop-blur-sm bg-white/5 rounded-lg">
       <div class="flex flex-col md:flex-row justify-around items-center w-1/2 mx-auto mb-8">
-        <Avatar src={items[activeIndex].src} size="xl" class="" />
+        <Avatar src={items[activeIndex].srcLight} size="xl" border class="dark:hidden" />
+        <Avatar src={items[activeIndex].srcDark} size="xl" border class="hidden dark:block" />
         <h2 class="text-xl sm:text-2xl md:text-3xl font-bold">{items[activeIndex].title}</h2>
       </div>
 

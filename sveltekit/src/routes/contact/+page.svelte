@@ -1,11 +1,13 @@
 <script lang="ts">
   import { ContactButtons, Hero } from '$lib';
+  import { contactDescription } from '$lib/constants';
 </script>
 
 <Hero
-  image="/favicon.png"
+  imageLight="/avatar_contact_light.png"
+  imageDark="/avatar_contact_dark.png"
   title="Contact me"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet arcu finibus, varius augue ac."
+  description={contactDescription}
 />
 
 <ContactButtons />

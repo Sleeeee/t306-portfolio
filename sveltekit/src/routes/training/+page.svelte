@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { PageProps } from '$types';
+  import type { PageProps } from '$types';
   import type { ButtonConfig } from '$lib/types';
   import { RectangleListOutline } from 'flowbite-svelte-icons';
-	import { ActivitiesCarousel, ActivitiesModal, CarouselSkeleton, Hero } from '$lib';
+  import { ActivitiesCarousel, ActivitiesModal, CarouselSkeleton, Hero } from '$lib';
+  import { trainingDescription } from '$lib/constants';
 
-	let { data }: PageProps = $props();
+  let { data }: PageProps = $props();
 
   let isOpen: boolean = $state(false);
   const openModal = (): void => { isOpen = true; };
@@ -13,9 +14,10 @@
 </script>
 
 <Hero
-  image="/favicon.png"
+  imageLight="/avatar_training_light.png"
+  imageDark="/avatar_training_dark.png"
   title="Training"
-  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis vulputate viverra. Etiam sit amet erat at orci laoreet semper a sit amet dui. Mauris."
+  description={trainingDescription}
   {button}
 />
 
