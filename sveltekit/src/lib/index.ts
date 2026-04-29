@@ -47,6 +47,7 @@ export { default as Hero } from './components/layout/Hero.svelte';
 export { default as Navigation } from './components/layout/Navigation.svelte';
 
 export { default as CarouselSkeleton } from './components/skeleton/CarouselSkeleton.svelte';
+export { default as SectionSkeleton } from './components/skeleton/SectionSkeleton.svelte';
 export { default as TableSkeleton } from './components/skeleton/TableSkeleton.svelte';
 
 export { default as ActivitiesCarousel } from './components/training/ActivitiesCarousel.svelte';
