@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { dev } from '$app/environment';
   import type { NavigationPage } from '$lib/types';
 	import { Avatar, DarkMode, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
 	import { GithubSolid, LinkedinSolid } from 'flowbite-svelte-icons';
@@ -11,7 +12,7 @@
     { title: "/about", href: "/about" },
     { title: "/training", href: "/training" },
     { title: "/contact", href: "/contact" },
-    { title: "/admin", href: "/admin", hidden: true }
+    ...((dev || page.data.isTailscale) ? [{ title: "/admin", href: "/admin" }] : [])
   ];
 </script>
 

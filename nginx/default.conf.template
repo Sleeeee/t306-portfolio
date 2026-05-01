@@ -1,0 +1,86 @@
+server {
+    listen 80;
+    server_name ${DOMAIN};
+
+    # location / {
+    #     return 301 https://$host$request_uri;
+    # }
+
+    location /admin {
+        # Allow only Tailscale and local clients
+        allow 100.64.0.0/10;
+        allow 127.0.0.1;
+        allow 172.16.0.0/12;
+        deny all;
+
+        proxy_pass http://portfolio-sveltekit-prod:3000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        proxy_pass http://portfolio-sveltekit-prod:3000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# server {
+#     listen 443 ssl;
+#     server_name localhost;
+#
+#     ssl_certificate /etc/nginx/certs/fullchain.pem;
+#     ssl_certificate_key /etc/nginx/certs/privkey.pem;
+#
+#     location /admin {
+#         # Allw only Tailscale clients
+#         allow 100.64.0.0/10;
+#         allow 127.0.0.1;
+#         allow 172.16.0.0/12;
+#         deny all;
+#
+#         proxy_pass http://portfolio-sveltekit-prod:3000;
+#
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#     }
+#
+#     location / {
+#         proxy_pass http://portfolio-sveltekit-prod:3000;
+#
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#     }
+# }
+
+server {
+    listen 80;
+    server_name passkey.${DOMAIN};
+
+    allow 100.64.0.0/10;
+    allow 127.0.0.1;
+    allow 172.16.0.0/12;
+    deny all;
+
+    location / {
+        # Internal Docker resolver
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_passkey http://passkey:8080;
+        proxy_pass $upstream_passkey;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

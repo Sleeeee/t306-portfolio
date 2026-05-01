@@ -26,3 +26,6 @@ migrations
 
 # Database files
 static/uploads
+
+# TLS certs
+nginx/certs

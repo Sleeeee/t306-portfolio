@@ -24,6 +24,18 @@ services:
     depends_on:
       - postgres
 
+  passkey:
+    container_name: portfolio-passkey
+    profiles:
+      - passkey
+    build:
+      context: ./passkey
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prisma
+    ports:
+      - "127.0.0.1:8080:8080"
+
 volumes:
   postgres_data:
     name: portfolio-postgres_data

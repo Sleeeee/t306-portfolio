@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { SECRET_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const generateSecret = (): string => {
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -24,7 +24,7 @@ export const verifySecret = (a: Uint8Array, b: Uint8Array): boolean => {
 };
 
 export const signData = (data: string): string => {
-  const hmac = crypto.createHmac("SHA-256", SECRET_KEY).update(data).digest("hex");
+  const hmac = crypto.createHmac("SHA-256", env.SECRET_KEY).update(data).digest("hex");
   return `${data}.${hmac}`;
 };
 
@@ -33,7 +33,7 @@ export const verifySignature = (signedData: string): boolean => {
   if (parts.length !== 2) { return false; }
   const [data, signature] = parts;
 
-  const expectedSignature: string = crypto.createHmac("SHA-256", SECRET_KEY).update(data).digest("hex");
+  const expectedSignature: string = crypto.createHmac("SHA-256", env.SECRET_KEY).update(data).digest("hex");
   if (signature === expectedSignature) { return data; }
 
   return false;

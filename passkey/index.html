@@ -34,28 +34,25 @@
   <script type="module">
     const { startRegistration } = SimpleWebAuthnBrowser;
 
-    const HOST = "localhost";
-    const PORT = "8080";
-
     const deleteSelect = document.getElementById("delete-passkey-select");
     const responseDisplay = document.getElementById("response-display");
 
     document.addEventListener("DOMContentLoaded", async () => {
-      const response = await fetch(`http://${HOST}:${PORT}/passkeys`);
+      const response = await fetch(`/passkeys`);
       for (let passkey of await response.json()) {
         deleteSelect.innerHTML += `<option value=${passkey.id}>${passkey.id.slice(0, 10)}</option>`;
       }
     });
 
     document.getElementById("register-admin-button").addEventListener("click", async () => {
-      const response = await fetch(`http://${HOST}:${PORT}/register-admin`, {
+      const response = await fetch(`/register-admin`, {
         method: "POST"
       });
       responseDisplay.innerText = await response.text();
     });
 
     document.getElementById("register-passkey-button").addEventListener("click", async () => {
-      const requestResp = await fetch(`http://${HOST}:${PORT}/register-request`, {
+      const requestResp = await fetch(`/register-request`, {
         method: "POST"
       });
       const contentType = requestResp.headers.get("content-type");
@@ -77,13 +74,12 @@
           throw error;
         }
 
-        const verifyResp = await fetch(`http://${HOST}:${PORT}/register-verify`, {
+        const verifyResp = await fetch(`/register-verify`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(attResp)
         });
         const verifyJSON = await verifyResp.json();
-        console.log(verifyJSON);
         if (verifyJSON && verifyJSON.verified) {
           responseDisplay.innerText = "Your admin passkey was successfully registered";
         } else {
@@ -93,7 +89,7 @@
     });
 
     document.getElementById("delete-passkey-button").addEventListener("click", async () => {
-      const response = await fetch(`http://${HOST}:${PORT}/passkeys`, {
+      const response = await fetch(`/passkeys`, {
         method: "DELETE",
         headers: { "Content-Type": "text/plain" },
         body: deleteSelect.value
@@ -102,7 +98,7 @@
     });
 
     document.getElementById("shutdown-button").addEventListener("click", () => {
-      fetch(`http://${HOST}:${PORT}/shutdown`, {
+      fetch(`/shutdown`, {
         method: "POST"
       });
       responseDisplay.innerText = "Server shutdown initialized. You can now close this window";

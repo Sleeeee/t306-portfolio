@@ -6,9 +6,9 @@ import { PrismaClient } from '@prisma/client';
 const host = "0.0.0.0";
 const port = 8080;
 
-const rpName = "Localhost";
-const rpId = "localhost";
-const origin = "http://localhost:8080";
+const rpName = process.env.RP_NAME || "Localhost";
+const rpId = process.env.RP_ID || "localhost";
+const origin = process.env.ORIGIN || "http://localhost:8080";
 
 const prisma = new PrismaClient();
 

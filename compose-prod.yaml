@@ -1,0 +1,59 @@
+services:
+  postgres:
+    container_name: portfolio-postgres-prod
+    image: postgres:17.5-alpine
+    restart: unless-stopped
+    env_file:
+      - .env.postgres.prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  sveltekit:
+    container_name: portfolio-sveltekit-prod
+    build:
+      context: ./sveltekit
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    env_file:
+      - .env.prisma.prod
+      - .env.sveltekit.prod
+    environment:
+      - NODE_ENV=production
+      - ORIGIN=http://localhost
+      - ADDRESS_HEADER=X-Forwarded-For
+    volumes:
+      - uploads:/app/static/uploads
+    depends_on:
+      - postgres
+
+  nginx:
+    container_name: portfolio-nginx-prod
+    image: nginx:1.29-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - .env.nginx.prod
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - sveltekit
+
+  passkey:
+    container_name: portfolio-passkey-prod
+    profiles:
+      - passkey
+    build:
+      context: ./passkey
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prisma.prod
+      - .env.passkey.prod
+
+volumes:
+  postgres_data:
+    name: portfolio-postgres_data_prod
+  uploads:
+    name: portfolio-uploads_prod
