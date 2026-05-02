@@ -16,6 +16,9 @@ POSTGRES_DB=portfolio
 
 # .env.sveltekit
 SECRET_KEY=example_secret_key
+RP_ID=example_domain # prod-only
+ORIGIN=https://example_domain # prod-only
+BODY_SIZE_LIMIT=20971520 # prod-only
 
 # .env.prisma
 DATABASE_URL=postgresql://postgres:example_postgres_password@portfolio-postgres:5432/portfolio # Replace portfolio-postgres with portfolio-postgres-prod in .env.prisma.prod
@@ -23,8 +26,8 @@ PRISMA_CLIENT_ENGINE_TYPE=library
 
 # .env.passkey.prod (prod-only)
 PORT=8080
-RP_ID=passkey.example_domain
-ORIGIN=https://passkey.example_domain
+RP_ID=example_domain
+ORIGIN=https://example_domain
 ```
 
 ### Development environment :
@@ -47,7 +50,7 @@ docker exec -it portfolio-sveltekit-prod npx prisma db push
 docker compose --profile passkey up # Add -f flag for production
 ```
 
-This will spin up the passkey configuration web server on `http://localhost:8080` (dev) or `https://passkey.example_domain` (prod). After registering your passkeys, you can stop the passkey server :
+This will spin up the passkey configuration web server on `http://localhost:8080/passkey/` (dev) or `https://example_domain/passkey/` (prod). Don't forget the trailing slash ! After registering your passkeys, you can stop the passkey server :
 
 ```bash
 docker compose stop passkey # Add -f flag for production

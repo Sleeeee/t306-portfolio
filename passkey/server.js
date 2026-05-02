@@ -5,11 +5,11 @@ import { PrismaClient } from '@prisma/client';
 
 const host = "0.0.0.0";
 const port = 8080;
+const prefixRoute = "/passkey";
 
 const rpName = process.env.RP_NAME || "Localhost";
 const rpId = process.env.RP_ID || "localhost";
 const origin = process.env.ORIGIN || "http://localhost:8080";
-const prefixRoute = "/passkey";
 
 const prisma = new PrismaClient();
 
