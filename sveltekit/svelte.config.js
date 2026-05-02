@@ -9,7 +9,8 @@ const config = {
 
   kit: {
     // Explicit adapter-node
-    adapter: adapter({ out: "build" })
+    adapter: adapter({ out: "build" }),
+    csrf: { trustedOrigins: ["https://z13-1.tanuki-macaroni.ts.net"] }
   }
 };
 

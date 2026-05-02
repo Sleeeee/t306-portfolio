@@ -1,14 +1,16 @@
 import { fail } from '@sveltejs/kit';
-import type { FormData } from '$types';
+import { env } from '$env/dynamic/private';
+import type { FormData, PageServerLoad } from '$types';
 import type { ActionResponse, Passkey, User } from '$lib/types';
 import { generateAuthenticationOptions, verifyAuthenticationResponse, type PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/server';
 import prisma from '$lib/prisma';
-import { createSession, deleteAllSessions, signData, verifySignature } from '$lib/server/auth';
+import { signData, verifySignature } from './crypto.ts';
+import { createSession, deleteAllSessions } from './session.ts';
 
-const rpID = "localhost";
-const origin = "http://localhost:5173";
+const rpID = env.RP_ID || "localhost";
+const origin = env.ORIGIN || "http://localhost:5173";
 
-export const loginRequest = async ({ cookies }): Promise<ActionResponse> => {
+const loginRequest = async ({ cookies }): Promise<ActionResponse> => {
   if (cookies.get("session")) { return fail(422, { success: false, message: "You are already authenticated" }); }
   if (cookies.get("options")) { return { success: true, message: "Challenge successfully retrieved from user cookie" }; }
 
@@ -34,6 +36,24 @@ export const loginRequest = async ({ cookies }): Promise<ActionResponse> => {
   const optionsSigned: string = signData(JSON.stringify(options));
   cookies.set("options", optionsSigned, { path: "/login", maxAge: 60 });
   return { success: true, message: "Challenge generated successfully" };
+};
+
+export const loginPageServerLoad: PageServerLoad = async({ cookies }) => {
+  const response: ActionResponse = await loginRequest({ cookies });
+  if (!response?.success) { return { response: response.data, options: null }; }
+
+  const optionsB64: string | null = cookies.get("options");
+  let options = null;
+
+  if (optionsB64) {
+    const optionsVerified: string | false = verifySignature(optionsB64);
+    if (optionsVerified) { options = JSON.parse(optionsVerified); }
+  }
+
+  return {
+    response,
+    options
+  };
 };
 
 export const loginValidation = async ({ cookies, request }): Promise<ActionResponse> => {

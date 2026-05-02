@@ -13,26 +13,19 @@
   function initOptions() { return data?.options; }
 
   let response: ActionResponse | null = $state(initResponse());
-  let optionsString: string | null = $state(initOptions());
-  let optionsArray: string[] = $derived(optionsString?.split(".") ?? []);
-
-  $effect(() => {
-    if (optionsString && (optionsArray.length !== 2)) {
-      response = { success: false, message: "The \"options\" cookie is invalid" };
-    }
-  });
+  let optionsJSON: string | null = $state(initOptions());
 
   let isAuthenticating: boolean = $state(false);
 
   const enhanceHandler = async ({ cancel, formData }) => {
-    if (optionsArray[0]) {
+    if (optionsJSON) {
       isAuthenticating = true;
 
       try {
-        const optionsJSON: PublicKeyCredentialRequestOptionsJSON = JSON.parse(optionsArray[0]);
         const authResponse = await startAuthentication({ optionsJSON });
         formData.append("response", JSON.stringify(authResponse));
       } catch (error) {
+        console.error(error);
         response = { success: false, message: "An error occured while trying to authenticate your passkey" };
         isAuthenticating = false;
         cancel();
@@ -45,7 +38,7 @@
 
     return async ({ result }) => {
       response = result.data;
-      if (response?.success) { optionsString = null; }
+      if (response?.success) { optionsJSON = null; }
       isAuthenticating = false;
     };
   };
@@ -57,13 +50,13 @@
   {/if}
 
   <form method="POST" use:enhance={enhanceHandler}>
-    <Button size="lg" type="submit" disabled={!optionsString || isAuthenticating} class="gap-2">
+    <Button size="lg" type="submit" disabled={!optionsJSON || isAuthenticating} class="gap-2">
       Authenticate
       <ArrowLeftToBracketOutline />
     </Button>
   </form>
 
-  {#if !optionsString}
+  {#if !optionsJSON}
     <div class="flex gap-4 mt-6">
       <Button href="/logout" size="lg" outline class="gap-2">
         To logout page

@@ -19,7 +19,6 @@ services:
       - .env.sveltekit.prod
     environment:
       - NODE_ENV=production
-      - ORIGIN=http://localhost
       - ADDRESS_HEADER=X-Forwarded-For
     volumes:
       - uploads:/app/static/uploads
@@ -31,13 +30,13 @@ services:
     image: nginx:1.29-alpine
     restart: unless-stopped
     ports:
-      - '80:80'
       - '443:443'
     env_file:
       - .env.nginx.prod
     volumes:
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./nginx/certs:/etc/nginx/certs:ro
+      - uploads:/usr/share/nginx/html/uploads:ro
     depends_on:
       - sveltekit
 

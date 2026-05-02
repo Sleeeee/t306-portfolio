@@ -9,6 +9,7 @@ const port = 8080;
 const rpName = process.env.RP_NAME || "Localhost";
 const rpId = process.env.RP_ID || "localhost";
 const origin = process.env.ORIGIN || "http://localhost:8080";
+const prefixRoute = "/passkey";
 
 const prisma = new PrismaClient();
 
@@ -139,9 +140,9 @@ async function deleteAdminPasskey(credId) {
 
 async function handleRequest(req, res) {
   if (req.method === "GET") {
-    if (req.url === "/") {
+    if (req.url === `${prefixRoute}/`) {
       serveIndex(res);
-    } else if (req.url === "/passkeys") {
+    } else if (req.url === `${prefixRoute}/passkeys`) {
       const adminPasskeys = await getAdminPasskeys();
       serve200(res, JSON.stringify(adminPasskeys), "application/json");
     } else {
@@ -149,11 +150,11 @@ async function handleRequest(req, res) {
     }
 
   } else if (req.method === "POST") {
-    if (req.url === "/register-request") {
+    if (req.url === `${prefixRoute}/register-request`) {
       const { content, contentType } = await registerRequest();
       serve200(res, content, contentType);
 
-    } else if (req.url === "/register-verify") {
+    } else if (req.url === `${prefixRoute}/register-verify`) {
       let body = "";
       req.on("data", chunk => {
         body += chunk;
@@ -165,11 +166,11 @@ async function handleRequest(req, res) {
         if (verification.verified) { createAdminPasskey(verification.registrationInfo); }
       });
 
-    } else if (req.url === "/register-admin") {
+    } else if (req.url === `${prefixRoute}/register-admin`) {
       const content = await createAdminUser();
       serve200(res, content, "text/plain");
 
-    } else if (req.url === "/shutdown") {
+    } else if (req.url === `${prefixRoute}/shutdown`) {
       shutdown();
 
     } else {
@@ -177,7 +178,7 @@ async function handleRequest(req, res) {
     }
 
   } else if (req.method === "DELETE") {
-    if (req.url === "/passkeys") {
+    if (req.url === `${prefixRoute}/passkeys`) {
       let body = "";
       req.on("data", chunk => {
         body += chunk;

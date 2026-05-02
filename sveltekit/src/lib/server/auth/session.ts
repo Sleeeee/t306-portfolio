@@ -1,7 +1,7 @@
 import type { Session, SessionWithToken } from '$lib/types';
 import { validSessionMilliseconds } from '$lib/constants';
 import prisma from '$lib/prisma';
-import { generateSecret, hashSecret, verifySecret } from '$lib/server/auth';
+import { generateSecret, hashSecret, verifySecret } from './crypto.ts';
 
 export const createSession = async ({ cookies }): Promise<SessionWithToken> => {
   const id: string = generateSecret();

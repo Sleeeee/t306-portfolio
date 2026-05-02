@@ -12,7 +12,7 @@
     { title: "/about", href: "/about" },
     { title: "/training", href: "/training" },
     { title: "/contact", href: "/contact" },
-    ...((dev || page.data.isTailscale) ? [{ title: "/admin", href: "/admin" }] : [])
+    ...((dev || page.data.isTailscaleClient) ? [{ title: "/admin", href: "/admin" }] : [])
   ];
 </script>
 

@@ -1,79 +1,36 @@
 server {
-    listen 80;
+    listen 443 ssl;
     server_name ${DOMAIN};
 
-    # location / {
-    #     return 301 https://$host$request_uri;
-    # }
+    ssl_certificate /etc/nginx/certs/server.crt;
+    ssl_certificate_key /etc/nginx/certs/server.key;
 
-    location /admin {
-        # Allow only Tailscale and local clients
+    location ~ ^/(admin|login|logout) {
         allow 100.64.0.0/10;
         allow 127.0.0.1;
         allow 172.16.0.0/12;
         deny all;
 
-        proxy_pass http://portfolio-sveltekit-prod:3000;
+        proxy_pass http://sveltekit:3000;
+        client_max_body_size 20M; # Admin panel file upload
 
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-    }
 
-    location / {
-        proxy_pass http://portfolio-sveltekit-prod:3000;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
     }
-}
 
-# server {
-#     listen 443 ssl;
-#     server_name localhost;
-#
-#     ssl_certificate /etc/nginx/certs/fullchain.pem;
-#     ssl_certificate_key /etc/nginx/certs/privkey.pem;
-#
-#     location /admin {
-#         # Allw only Tailscale clients
-#         allow 100.64.0.0/10;
-#         allow 127.0.0.1;
-#         allow 172.16.0.0/12;
-#         deny all;
-#
-#         proxy_pass http://portfolio-sveltekit-prod:3000;
-#
-#         proxy_set_header Host $host;
-#         proxy_set_header X-Real-IP $remote_addr;
-#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#         proxy_set_header X-Forwarded-Proto $scheme;
-#     }
-#
-#     location / {
-#         proxy_pass http://portfolio-sveltekit-prod:3000;
-#
-#         proxy_set_header Host $host;
-#         proxy_set_header X-Real-IP $remote_addr;
-#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#         proxy_set_header X-Forwarded-Proto $scheme;
-#     }
-# }
+    location /passkey {
+        allow 100.64.0.0/10;
+        allow 127.0.0.1;
+        allow 172.16.0.0/12;
+        deny all;
 
-server {
-    listen 80;
-    server_name passkey.${DOMAIN};
-
-    allow 100.64.0.0/10;
-    allow 127.0.0.1;
-    allow 172.16.0.0/12;
-    deny all;
-
-    location / {
-        # Internal Docker resolver
+        # Internet Docker resolver
         resolver 127.0.0.11 valid=30s;
         set $upstream_passkey http://passkey:8080;
         proxy_pass $upstream_passkey;
@@ -82,5 +39,24 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /uploads/ {
+        alias /usr/share/nginx/html/uploads/;
+
+        location ~ \.(php|js|sh)$ { deny all; }
+    }
+
+    location / {
+        proxy_pass http://sveltekit:3000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
     }
 }

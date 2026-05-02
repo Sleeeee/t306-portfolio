@@ -1,7 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/prisma';
-import { Technology } from '$lib/types';
 import { getDegrees, getJobs, getTechnologies } from '$lib/server/database';
 
 export const load: PageServerLoad = async () => {

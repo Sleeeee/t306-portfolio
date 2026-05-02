@@ -57,21 +57,20 @@
 
     return async ({ result, update }) => {
       formResponse = result.data;
+
+      if (formResponse?.success) {
+        setTimeout(() => {
+          closeDialog();
+          formResponse = null;
+          loading = false;
+        }, 500);
+      } else {
+        loading = false;
+      }
+
       await update();
     };
   };
-
-  $effect(() => {
-    if (formResponse?.success) {
-      setTimeout(() => {
-        closeDialog();
-        formResponse = null;
-        loading = false;
-      }, 500);
-    } else {
-      loading = false;
-    }
-  });
 </script>
 
 <div class="flex items-center justify-between mb-4">

@@ -32,27 +32,29 @@
   <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
 
   <script type="module">
+    const prefixRoute = "/passkey";
+
     const { startRegistration } = SimpleWebAuthnBrowser;
 
     const deleteSelect = document.getElementById("delete-passkey-select");
     const responseDisplay = document.getElementById("response-display");
 
     document.addEventListener("DOMContentLoaded", async () => {
-      const response = await fetch(`/passkeys`);
+      const response = await fetch(`${prefixRoute}/passkeys`);
       for (let passkey of await response.json()) {
         deleteSelect.innerHTML += `<option value=${passkey.id}>${passkey.id.slice(0, 10)}</option>`;
       }
     });
 
     document.getElementById("register-admin-button").addEventListener("click", async () => {
-      const response = await fetch(`/register-admin`, {
+      const response = await fetch(`${prefixRoute}/register-admin`, {
         method: "POST"
       });
       responseDisplay.innerText = await response.text();
     });
 
     document.getElementById("register-passkey-button").addEventListener("click", async () => {
-      const requestResp = await fetch(`/register-request`, {
+      const requestResp = await fetch(`${prefixRoute}/register-request`, {
         method: "POST"
       });
       const contentType = requestResp.headers.get("content-type");
@@ -74,7 +76,7 @@
           throw error;
         }
 
-        const verifyResp = await fetch(`/register-verify`, {
+        const verifyResp = await fetch(`${prefixRoute}/register-verify`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(attResp)
@@ -89,7 +91,7 @@
     });
 
     document.getElementById("delete-passkey-button").addEventListener("click", async () => {
-      const response = await fetch(`/passkeys`, {
+      const response = await fetch(`${prefixRoute}/passkeys`, {
         method: "DELETE",
         headers: { "Content-Type": "text/plain" },
         body: deleteSelect.value
@@ -98,7 +100,7 @@
     });
 
     document.getElementById("shutdown-button").addEventListener("click", () => {
-      fetch(`/shutdown`, {
+      fetch(`${prefixRoute}/shutdown`, {
         method: "POST"
       });
       responseDisplay.innerText = "Server shutdown initialized. You can now close this window";
