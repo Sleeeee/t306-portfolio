@@ -1,20 +1,22 @@
 <script lang="ts">
-  import type { Degree, Job, Section, Technology } from '$lib/types';
+  import type { Degree, Job, Objective, Section, Technology } from '$lib/types';
   import { Listgroup, ListgroupItem } from 'flowbite-svelte';
-  import { BriefcaseSolid, GraduationCapSolid, LaptopCodeSolid } from 'flowbite-svelte-icons';
-	import { EducationTimeline, ExperienceTimeline, TechnologiesGallery } from '$lib';
+  import { FlagSolid, BriefcaseSolid, GraduationCapSolid, LaptopCodeSolid } from 'flowbite-svelte-icons';
+	import { EducationTimeline, ExperienceTimeline, ObjectivesTimeline, TechnologiesGallery } from '$lib';
 
   interface Props {
     degrees: Degree[];
     jobs: Job[];
+    objectives: Objective[];
     technologies: Technology[];
   }
 
-	let { degrees, jobs, technologies }: Props = $props();
+	let { degrees, jobs, objectives, technologies }: Props = $props();
   const BASE_OFFSET: number = 112;
 
   let items: Section[] = $state([
-    { name: "Technologies", element: null, Icon: LaptopCodeSolid, current: true },
+    { name: "Objectives", element: null, Icon: FlagSolid, current: true },
+    { name: "Technologies", element: null, Icon: LaptopCodeSolid, current: false },
     { name: "Experience", element: null, Icon: BriefcaseSolid, current: false },
     { name: "Education", element: null, Icon: GraduationCapSolid, current: false }
   ]);
@@ -61,16 +63,18 @@
   {/each}
 </Listgroup>
 
-
-
 <div bind:this={items[0].element} class="my-8 p-4 rounded-lg bg-pattern-soft">
-  <TechnologiesGallery {technologies} />
+  <ObjectivesTimeline {objectives} />
 </div>
 
 <div bind:this={items[1].element} class="my-8 p-4 rounded-lg bg-pattern-soft">
+  <TechnologiesGallery {technologies} />
+</div>
+
+<div bind:this={items[2].element} class="my-8 p-4 rounded-lg bg-pattern-soft">
   <ExperienceTimeline {jobs} />
 </div>
 
-<div bind:this={items[2].element} class="mt-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 bg-pattern-soft">
+<div bind:this={items[3].element} class="mt-8 p-4 rounded-lg bg-gray-50 dark:bg-gray-800 bg-pattern-soft">
   <EducationTimeline {degrees} />
 </div>

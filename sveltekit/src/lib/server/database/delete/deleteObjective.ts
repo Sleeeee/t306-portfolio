@@ -1,0 +1,11 @@
+import type { FormData } from '$types';
+import type { ActionResponse } from '$lib/types';
+import { deleteItem } from '$lib/server/database';
+
+export const deleteObjective = async ({ cookies, request }): Promise<ActionResponse> => {
+  const data: FormData = await request.formData();
+
+  const id: string = data.get("id");
+
+  return deleteItem({ table: "objectives", id });
+};

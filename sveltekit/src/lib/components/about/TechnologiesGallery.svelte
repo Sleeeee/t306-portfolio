@@ -31,11 +31,11 @@
   <p class="text-justify dark:text-white">{technologiesDescription}</p>
 </div>
 
-<Gallery class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 backdrop-blur-sm bg-white/5 rounded-lg">
+<Gallery class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
   {#each { length: 4 }, index}
   <Gallery items={getQuarter(index)}>
     {#snippet figure(item)}
-      <button onclick={() => { expandCard(item.id); }} class="p-2 sm:p-4 border-gray-200 dark:border-gray-700 shadow-md bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg dark:text-white cursor-pointer">
+      <button onclick={() => { expandCard(item.id); }} class="p-2 sm:p-4 border-gray-200 dark:border-gray-700 shadow-md backdrop-blur-sm bg-white/5 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg dark:text-white cursor-pointer">
         <img src={item.image} alt={`Image for ${item.name}`} class="w-24 h-24 md:w-48 md:h-48 mx-auto mb-4" />
 
         {#if item.id === openIndex}

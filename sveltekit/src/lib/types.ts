@@ -73,6 +73,12 @@ export interface Job {
   description: string;
 }
 
+export interface Objective {
+  id: number;
+  name: string;
+  description: string;
+}
+
 export interface Technology {
   id: number;
   name: string;

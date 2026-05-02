@@ -10,10 +10,11 @@ export const validImageFields: string[] = ["image", "proof"];
 
 export const validMimeTypes: string[] = ["image/jpeg", "image/png"];
 
-export const validTables: Table[] = ["activities", "degrees", "jobs", "labels", "technologies"];
+export const validTables: Table[] = ["activities", "degrees", "jobs", "labels", "objectives", "technologies"];
 
 export const homeDescription: string = "Hey there, I'm Justin, a final year student in IT, with a strong interest in security, especially pentesting. This is my personal portfolio, where I showcase some of my professional works and achievements. Hope you have a good time !";
 export const aboutDescription: string = "This section provides an overview of my technical background and professional journey.";
+export const objectivesDescription: string = "Foundational career vision and objectives driving my progression in offensive security";
 export const technologiesDescription: string = "Valuable hard skills I have learned along the way";
 export const experienceDescription: string = "Relevant tech positions";
 export const educationDescription: string = "Academic enrollment";

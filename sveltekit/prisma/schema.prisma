@@ -73,6 +73,12 @@ model jobs {
   description String?
 }
 
+model objectives {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+}
+
 model technologies {
   id          Int      @id @default(autoincrement())
   name        String

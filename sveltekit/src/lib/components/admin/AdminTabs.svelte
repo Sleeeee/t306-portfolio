@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Activity, Degree, Job, Label, Technology } from '$lib/types';
   import { Tabs, TabItem } from 'flowbite-svelte';
-  import { BriefcaseSolid, FolderOpenSolid, GraduationCapSolid, LabelSolid, LaptopCodeSolid } from 'flowbite-svelte-icons';
-  import { ActivitiesTable, DegreesTable, JobsTable, LabelsTable, TechnologiesTable } from '$lib';
+  import { BriefcaseSolid, FlagSolid, FolderOpenSolid, GraduationCapSolid, LabelSolid, LaptopCodeSolid } from 'flowbite-svelte-icons';
+  import { ActivitiesTable, DegreesTable, JobsTable, LabelsTable, ObjectivesTable, TechnologiesTable } from '$lib';
 
   interface Props {
     activities: Activity[];
@@ -12,13 +12,14 @@
     technologies: Technology[];
   }
 
-  let { activities, degrees, jobs, labels, technologies }: Props = $props();
+  let { activities, degrees, jobs, labels, objectives, technologies }: Props = $props();
 
   const tabs = $derived([
     { title: "Activities", component: ActivitiesTable, icon: FolderOpenSolid, items: activities, labels: labels, open: true },
     { title: "Degrees", component: DegreesTable, icon: GraduationCapSolid, items: degrees },
     { title: "Jobs", component: JobsTable, icon: BriefcaseSolid, items: jobs },
     { title: "Labels", component: LabelsTable, icon: LabelSolid, items: labels },
+    { title: "Objectives", component: ObjectivesTable, icon: FlagSolid, items: objectives },
     { title: "Technologies", component: TechnologiesTable, icon: LaptopCodeSolid, items: technologies, labels }
   ]);
 </script>

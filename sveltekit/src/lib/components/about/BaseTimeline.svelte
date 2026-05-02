@@ -15,7 +15,7 @@
     <TimelineItem title={item.title}>
       {#snippet orientationSlot()}
         {@const Icon = item.icon}
-        <span class="bg-primary-200 dark:bg-primary-900 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full">
+        <span class="bg-primary-200 dark:bg-primary-900 absolute -start-5 flex h-8 w-8 items-center justify-center rounded-full">
           <Icon class="text-primary-600 dark:text-primary-400 h-5 w-5" />
         </span>
       {/snippet}
