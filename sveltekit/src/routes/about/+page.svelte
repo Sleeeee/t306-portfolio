@@ -9,7 +9,7 @@
 
   const aboutData: Promise<[Degree[], Job[], Objective[], Technology[]]> = $derived(Promise.all([data.degrees, data.jobs, data.objectives, data.technologies]));
 
-  const button: ButtonConfig = { icon: ProfileCardOutline, href: "/favicon.png", target: "_blank", text: "View full résumé" };
+  const button: ButtonConfig = { icon: ProfileCardOutline, href: "/resume.pdf", target: "_blank", text: "View full résumé" };
 </script>
 
 <Hero
