@@ -20,6 +20,8 @@ services:
     environment:
       - NODE_ENV=production
       - ADDRESS_HEADER=X-Forwarded-For
+      - HOST_HEADER=X-Forwarded-Host
+      - PROTOCOL_HEADER=X-Forwarded-Proto
     volumes:
       - uploads:/app/static/uploads
     depends_on:
@@ -30,7 +32,7 @@ services:
     image: nginx:1.29-alpine
     restart: unless-stopped
     ports:
-      - '443:443'
+      - '0.0.0.0:443:443'
     env_file:
       - .env.nginx.prod
     volumes:
